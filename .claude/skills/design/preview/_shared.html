@@ -1,0 +1,40 @@
+<!-- Shared tape-strip + card helpers used by preview cards.
+     Designed for ~700px-wide cards. -->
+<style>
+  /* ────────── reset ────────── */
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body, 'Open Sans', system-ui, sans-serif);
+    background: var(--paper, #f6f4ef);
+    color: var(--ink, #181818);
+    overflow: hidden;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+
+  /* ────────── tape strip — yellow gaffer ────────── */
+  .tape {
+    display: inline-block;
+    background: #ffe850;
+    color: #0a0a0a;
+    font-family: 'Permanent Marker', cursive;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    padding: 6px 16px 4px;
+    transform: rotate(-2deg);
+    clip-path: polygon(2% 8%, 99% 0%, 98% 92%, 1% 100%);
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.08);
+    line-height: 1.05;
+  }
+  .tape.flat { transform: none; }
+  .tape.tilt-r { transform: rotate(2.5deg); }
+  .tape.tilt-l { transform: rotate(-3deg); }
+  .tape.tilt-lg { transform: rotate(-5deg); }
+
+  /* ────────── wall — concrete grey for marker ────────── */
+  .wall {
+    background: #999999;
+    color: #0a0a0a;
+    font-family: 'Permanent Marker', cursive;
+    text-transform: uppercase;
+  }
+</style>

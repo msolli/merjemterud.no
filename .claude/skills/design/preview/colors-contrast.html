@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html,body{margin:0;padding:0;background:var(--paper);overflow:hidden;font-family:var(--font-body);}
+  .card{width:700px;height:280px;padding:22px 28px;position:relative;}
+  .lbl{font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#666;margin-bottom:12px;}
+  .pair{display:flex;align-items:center;gap:14px;margin-bottom:10px;font-size:13px;}
+  .chip{width:160px;padding:10px 12px;font-family:var(--font-body);font-weight:700;font-size:13px;border:1.5px solid #0a0a0a;display:flex;justify-content:space-between;align-items:center;letter-spacing:0.02em;}
+  .ratio{font-family:var(--font-mono);font-size:11px;opacity:.6;}
+  .pass{display:inline-block;font-family:var(--font-body);font-weight:700;font-size:10px;padding:2px 6px;letter-spacing:0.08em;}
+  .pass.aaa{background:#0a0a0a;color:#ffe850;}
+  .pass.aa{background:#ffe850;color:#0a0a0a;}
+  .pass.fail{background:#e63946;color:#fff;}
+  .note{font-family:var(--font-body);font-size:11px;color:#666;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="lbl">CONTRAST — APPROVED PAIRS</div>
+
+  <div class="pair">
+    <div class="chip" style="background:#0a0a0a;color:#ffe850;">YELLOW ON BLACK <span class="ratio">15.6:1</span></div>
+    <span class="pass aaa">AAA</span><span class="note">primary headline pair</span>
+  </div>
+  <div class="pair">
+    <div class="chip" style="background:#ffe850;color:#0a0a0a;">BLACK ON YELLOW <span class="ratio">15.6:1</span></div>
+    <span class="pass aaa">AAA</span><span class="note">tape labels, primary CTA</span>
+  </div>
+  <div class="pair">
+    <div class="chip" style="background:#999;color:#0a0a0a;">BLACK ON GREY 999 <span class="ratio">7.4:1</span></div>
+    <span class="pass aaa">AAA</span><span class="note">marker on wall</span>
+  </div>
+  <div class="pair">
+    <div class="chip" style="background:#f6f4ef;color:#666;">GREY 666 ON PAPER <span class="ratio">5.9:1</span></div>
+    <span class="pass aa">AA</span><span class="note">secondary body</span>
+  </div>
+  <div class="pair">
+    <div class="chip" style="background:#fff;color:#ffe850;">YELLOW ON WHITE <span class="ratio">1.4:1</span></div>
+    <span class="pass fail">DON'T</span><span class="note">never put yellow text on light bg</span>
+  </div>
+</div>
+</body></html>

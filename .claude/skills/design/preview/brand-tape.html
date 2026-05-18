@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html,body{margin:0;padding:0;background:var(--paper);overflow:hidden;font-family:var(--font-body);}
+  .card{width:700px;height:240px;padding:24px 28px;position:relative;display:flex;flex-direction:column;gap:16px;}
+  .lbl{font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#666;}
+  .row{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap;}
+  .tape{background:#ffe850;color:#0a0a0a;font-family:'Permanent Marker',cursive;text-transform:uppercase;padding:8px 18px 6px;display:inline-block;line-height:1;box-shadow:1px 1px 0 rgba(0,0,0,0.08);}
+  .t1{transform:rotate(-3deg);clip-path:polygon(2% 8%,99% 0%,98% 92%,1% 100%);font-size:22px;}
+  .t2{transform:rotate(2.5deg);clip-path:polygon(0% 12%,100% 4%,99% 96%,2% 100%);font-size:32px;}
+  .t3{transform:rotate(-1.5deg);clip-path:polygon(3% 4%,98% 10%,99% 100%,1% 92%);font-size:18px;padding:6px 14px 4px;}
+  .t4{transform:rotate(-5deg);clip-path:polygon(1% 8%,99% 2%,98% 96%,2% 100%);font-size:14px;padding:4px 10px 3px;}
+  .stack{position:relative;height:120px;width:280px;}
+  .stack .tape{position:absolute;}
+  .stack .a{top:6px;left:0;font-size:16px;transform:rotate(-4deg);}
+  .stack .b{top:38px;left:30px;font-size:16px;transform:rotate(2deg);}
+  .stack .c{top:74px;left:14px;font-size:16px;transform:rotate(-1deg);}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="lbl">TAPE STRIPS — THE BRAND DEVICE</div>
+  <div class="row">
+    <span class="tape t1">SOUNDCHECK</span>
+    <span class="tape t2">JEMTERUD 50</span>
+    <span class="tape t3">FRI · 19:00</span>
+    <span class="tape t4">BACKSTAGE</span>
+  </div>
+  <div class="row" style="align-items:flex-start;">
+    <div class="stack">
+      <span class="tape a">CH 01 — KICK</span>
+      <span class="tape b">CH 02 — SNARE</span>
+      <span class="tape c">CH 03 — VOX</span>
+    </div>
+    <div style="flex:1;font-size:12px;color:#666;line-height:1.5;padding-top:6px;">
+      Yellow gaffer + black marker. Slight rotation (±2°–6°). Ragged clip-path edges. Strips overlap each other. Tape is a noun — you stick tape onto things.
+    </div>
+  </div>
+</div>
+</body></html>

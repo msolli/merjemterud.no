@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html,body{margin:0;padding:0;background:var(--paper);overflow:hidden;font-family:var(--font-body);}
+  .card{width:700px;height:220px;padding:24px 28px;position:relative;}
+  .lbl{font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#666;margin-bottom:18px;}
+  .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+  .pill{font-family:'Open Sans',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;font-size:11px;padding:5px 12px 4px;border:1.5px solid #0a0a0a;background:transparent;border-radius:999px;color:#0a0a0a;}
+  .pill.filled{background:#0a0a0a;color:#ffe850;}
+  .pill.yel{background:#ffe850;}
+  .pill.live{background:#e63946;color:#fff;border-color:#e63946;display:inline-flex;align-items:center;gap:6px;}
+  .pill.live::before{content:'';width:7px;height:7px;background:#fff;border-radius:50%;animation:blink 1s steps(2) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  .badge-tape{display:inline-block;background:#ffe850;color:#0a0a0a;font-family:'Permanent Marker',cursive;text-transform:uppercase;font-size:14px;padding:5px 14px 3px;transform:rotate(-3deg);clip-path:polygon(2% 8%,99% 0%,98% 92%,1% 100%);line-height:1;}
+  .num{font-family:'Permanent Marker',cursive;font-size:40px;color:#0a0a0a;line-height:1;}
+  .col{display:flex;flex-direction:column;gap:10px;}
+  .colhead{font-family:var(--font-mono);font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.06em;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="lbl">BADGES & TAGS</div>
+  <div class="row" style="align-items:flex-start;gap:36px;">
+    <div class="col">
+      <span class="colhead">tag pills</span>
+      <div class="row">
+        <span class="pill">NOISE</span>
+        <span class="pill">DRONE</span>
+        <span class="pill filled">TECHNO</span>
+        <span class="pill yel">RADIO</span>
+        <span class="pill">EXPERIMENTAL</span>
+      </div>
+    </div>
+    <div class="col">
+      <span class="colhead">status</span>
+      <div class="row">
+        <span class="pill live">ON AIR</span>
+        <span class="pill">SOLD OUT</span>
+      </div>
+    </div>
+    <div class="col">
+      <span class="colhead">tape label</span>
+      <span class="badge-tape">DAG 2 · LØR</span>
+    </div>
+  </div>
+</div>
+</body></html>

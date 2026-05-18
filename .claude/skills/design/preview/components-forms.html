@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html,body{margin:0;padding:0;background:var(--paper);overflow:hidden;font-family:var(--font-body);}
+  .card{width:700px;height:240px;padding:24px 28px;position:relative;}
+  .lbl{font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#666;margin-bottom:16px;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;align-items:start;}
+  .field{display:flex;flex-direction:column;gap:4px;}
+  .field label{font-family:'Open Sans',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#666;}
+  .field input,.field select,.field textarea{font-family:'Open Sans',sans-serif;font-size:14px;background:#f6f4ef;border:1.5px solid #0a0a0a;padding:8px 10px;color:#0a0a0a;border-radius:2px;}
+  .field input:focus{outline:3px solid #ffe850;outline-offset:2px;}
+  .checkrow{display:flex;align-items:center;gap:10px;}
+  .checkbox{width:18px;height:18px;background:#ffe850;border:1.5px solid #0a0a0a;display:inline-flex;align-items:center;justify-content:center;font-family:'Permanent Marker',cursive;color:#0a0a0a;font-size:14px;line-height:1;}
+  .empty{background:#f6f4ef;}
+  .toggle{width:44px;height:24px;border:1.5px solid #0a0a0a;background:#ffe850;position:relative;border-radius:999px;box-sizing:border-box;}
+  .toggle::after{content:'';position:absolute;top:50%;right:2px;width:16px;height:16px;background:#0a0a0a;border-radius:50%;transform:translateY(-50%);}
+  .toggle.off{background:#f6f4ef;}
+  .toggle.off::after{right:auto;left:2px;background:#666;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="lbl">FORM FIELDS</div>
+  <div class="grid">
+    <div class="field"><label>NAVN</label><input type="text" value="Ola Nordmann" /></div>
+    <div class="field"><label>E-POST</label><input type="email" value="ola@radio.no" /></div>
+    <div class="field"><label>BAND / ACT</label><input type="text" placeholder="(om aktuelt)" /></div>
+    <div class="field"><label>BILLETTYPE</label><select><option>Helgepass · 850 kr</option></select></div>
+    <div class="checkrow"><span class="checkbox">✕</span><span style="font-size:13px;">Jeg vil ha nyhetsbrev</span></div>
+    <div class="checkrow"><span class="toggle"></span><span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">ON AIR</span><span class="toggle off" style="margin-left:14px;"></span><span style="font-size:13px;color:#666;text-transform:uppercase;letter-spacing:0.06em;">OFF</span></div>
+  </div>
+</div>
+</body></html>

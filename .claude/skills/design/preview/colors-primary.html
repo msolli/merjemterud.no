@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html,body{margin:0;padding:0;background:var(--paper);overflow:hidden;font-family:var(--font-body);}
+  .card{width:700px;height:240px;padding:24px 28px;display:flex;flex-direction:column;justify-content:center;gap:18px;position:relative;}
+  .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+  .swatch{width:96px;height:96px;border:1.5px solid #0a0a0a;display:flex;flex-direction:column;justify-content:flex-end;padding:8px;font-family:var(--font-mono);font-size:11px;color:#0a0a0a;}
+  .swatch.dark{color:#f6f4ef;}
+  .swatch .name{font-weight:700;font-family:var(--font-body);text-transform:uppercase;letter-spacing:0.04em;font-size:10px;line-height:1.2;}
+  .swatch .hex{opacity:.7;font-size:10px;margin-top:2px;}
+  .lbl{position:absolute;top:14px;left:24px;font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#666;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="lbl">PRIMARY</div>
+  <div class="row">
+    <div class="swatch" style="background:#ffe850;"><span class="name">Tape Yellow</span><span class="hex">#FFE850</span></div>
+    <div class="swatch dark" style="background:#0a0a0a;"><span class="name">Marker Black</span><span class="hex">#0A0A0A</span></div>
+    <div class="swatch dark" style="background:#999;"><span class="name">Concrete Grey</span><span class="hex">#999999</span></div>
+    <div class="swatch dark" style="background:#666;"><span class="name">Studio Grey</span><span class="hex">#666666</span></div>
+    <div class="swatch" style="background:#f6f4ef;"><span class="name">Paper</span><span class="hex">#F6F4EF</span></div>
+  </div>
+</div>
+</body></html>

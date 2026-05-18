@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html,body{margin:0;padding:0;background:var(--paper);overflow:hidden;font-family:var(--font-body);}
+  .card{width:700px;height:200px;padding:24px 28px;position:relative;}
+  .lbl{font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#666;margin-bottom:16px;}
+  .row{display:flex;gap:20px;align-items:center;}
+  .item{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .demo{width:80px;height:80px;background:#ffe850;border:1.5px solid #0a0a0a;}
+  .tag{font-family:var(--font-mono);font-size:10px;color:#666;text-align:center;}
+  .tag b{display:block;font-family:var(--font-body);font-weight:700;color:#0a0a0a;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;}
+  .shadow{margin-right:8px;}
+  .sm{box-shadow:2px 2px 0 #0a0a0a;}
+  .md{box-shadow:4px 4px 0 #0a0a0a;}
+  .lg{box-shadow:6px 6px 0 #0a0a0a;}
+  .yel{box-shadow:4px 4px 0 #ffe850;background:#0a0a0a;}
+  .pill{width:80px;height:32px;background:#ffe850;border:1.5px solid #0a0a0a;border-radius:999px;}
+  .r2{border-radius:2px;}
+  .r0{border-radius:0;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="lbl">RADII & HARD-OFFSET SHADOWS</div>
+  <div class="row">
+    <div class="item"><div class="demo r0"></div><div class="tag"><b>0px</b>default</div></div>
+    <div class="item"><div class="demo r2"></div><div class="tag"><b>2px</b>buttons</div></div>
+    <div class="item"><div class="pill"></div><div class="tag"><b>999</b>pills</div></div>
+    <div class="item shadow"><div class="demo sm"></div><div class="tag"><b>SM</b>2 2 0</div></div>
+    <div class="item shadow"><div class="demo md"></div><div class="tag"><b>MD</b>4 4 0</div></div>
+    <div class="item shadow"><div class="demo lg"></div><div class="tag"><b>LG</b>6 6 0</div></div>
+    <div class="item shadow"><div class="demo yel"></div><div class="tag"><b>YEL</b>on black</div></div>
+  </div>
+</div>
+</body></html>

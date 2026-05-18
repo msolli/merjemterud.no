@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html,body{margin:0;padding:0;background:var(--paper);overflow:hidden;font-family:var(--font-body);}
+  .card{width:700px;height:120px;padding:0;position:relative;}
+  .nav{display:flex;align-items:center;height:100%;padding:0 28px;background:#0a0a0a;color:#f6f4ef;gap:28px;position:relative;}
+  .brand{font-family:'Permanent Marker',cursive;color:#ffe850;font-size:26px;line-height:1;letter-spacing:0.01em;text-transform:uppercase;}
+  .brand small{display:block;font-family:'Open Sans',sans-serif;color:#999;font-size:9px;letter-spacing:0.18em;font-weight:700;margin-top:2px;}
+  .links{display:flex;gap:22px;margin-left:auto;font-family:'Open Sans',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:12px;}
+  .links a{color:#f6f4ef;text-decoration:none;padding:6px 4px;border-bottom:2px solid transparent;}
+  .links a.active{color:#ffe850;border-bottom-color:#ffe850;}
+  .cta{font-family:'Open Sans',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:12px;padding:9px 16px;background:#ffe850;color:#0a0a0a;border:1.5px solid #ffe850;}
+  .live{display:inline-flex;align-items:center;gap:6px;font-family:'Open Sans',sans-serif;font-weight:700;font-size:10px;color:#e63946;text-transform:uppercase;letter-spacing:0.1em;padding:3px 8px;border:1.5px solid #e63946;}
+  .live::before{content:'';width:6px;height:6px;background:#e63946;border-radius:50%;animation:blink 1s steps(2) infinite;}
+  @keyframes blink{50%{opacity:0.3;}}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="nav">
+    <div class="brand">JEMTERUD 50<small>FESTIVAL · 2026</small></div>
+    <div class="links">
+      <a href="#" class="active">LINEUP</a>
+      <a href="#">PROGRAM</a>
+      <a href="#">RADIO</a>
+      <a href="#">INFO</a>
+    </div>
+    <span class="live">ON AIR · 97.4</span>
+    <button class="cta">BILLETT</button>
+  </div>
+</div>
+</body></html>

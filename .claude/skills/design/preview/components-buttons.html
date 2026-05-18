@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html,body{margin:0;padding:0;background:var(--paper);overflow:hidden;font-family:var(--font-body);}
+  .card{width:700px;height:200px;padding:24px 28px;position:relative;}
+  .lbl{font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#666;margin-bottom:18px;}
+  .row{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+  .btn{font-family:'Open Sans',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-size:13px;padding:12px 22px;cursor:pointer;border:1.5px solid #0a0a0a;background:#ffe850;color:#0a0a0a;box-shadow:4px 4px 0 #0a0a0a;border-radius:2px;}
+  .btn.secondary{background:#0a0a0a;color:#ffe850;}
+  .btn.ghost{background:transparent;box-shadow:none;}
+  .btn.hover{background:#0a0a0a;color:#ffe850;}
+  .btn.press{transform:translate(2px,2px);box-shadow:2px 2px 0 #0a0a0a;}
+  .lbl2{font-family:var(--font-mono);font-size:10px;color:#666;text-align:center;display:block;margin-top:8px;}
+  .col{display:flex;flex-direction:column;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="lbl">BUTTONS — STATES</div>
+  <div class="row">
+    <div class="col"><button class="btn">SOUNDCHECK</button><span class="lbl2">default</span></div>
+    <div class="col"><button class="btn hover">SOUNDCHECK</button><span class="lbl2">hover (invert)</span></div>
+    <div class="col"><button class="btn press">SOUNDCHECK</button><span class="lbl2">pressed</span></div>
+    <div class="col"><button class="btn secondary">SOUNDCHECK</button><span class="lbl2">secondary</span></div>
+    <div class="col"><button class="btn ghost">SOUNDCHECK</button><span class="lbl2">ghost</span></div>
+  </div>
+</div>
+</body></html>

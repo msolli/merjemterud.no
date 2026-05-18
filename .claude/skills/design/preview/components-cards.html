@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html,body{margin:0;padding:0;background:var(--paper);overflow:hidden;font-family:var(--font-body);}
+  .card{width:700px;height:240px;padding:24px 28px;position:relative;display:flex;gap:24px;align-items:flex-start;}
+  .lbl{position:absolute;top:14px;left:24px;font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#666;}
+  .flyer{position:relative;width:200px;background:#f6f4ef;border:1.5px solid #0a0a0a;box-shadow:4px 4px 0 #0a0a0a;padding:16px 14px;margin-top:24px;}
+  .flyer .tape{position:absolute;top:-12px;left:14px;background:#ffe850;color:#0a0a0a;font-family:'Permanent Marker',cursive;text-transform:uppercase;font-size:13px;padding:4px 10px 3px;transform:rotate(-3deg);}
+  .flyer h3{font-family:'Permanent Marker',cursive;font-size:24px;line-height:1;color:#0a0a0a;text-transform:uppercase;margin:8px 0 6px;}
+  .flyer p{font-size:12px;color:#666;line-height:1.45;margin:0 0 8px;}
+  .flyer .meta{font-family:'Open Sans',sans-serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#0a0a0a;border-top:1.5px solid #0a0a0a;padding-top:6px;display:flex;justify-content:space-between;}
+  .setlist{width:200px;background:#0a0a0a;color:#f6f4ef;padding:14px;margin-top:24px;font-family:'Open Sans',sans-serif;}
+  .setlist h4{font-family:'Permanent Marker',cursive;color:#ffe850;font-size:20px;margin:0 0 8px;text-transform:uppercase;}
+  .setlist ol{margin:0;padding:0;list-style:none;font-size:12px;font-weight:600;}
+  .setlist li{padding:4px 0;border-bottom:1px dashed rgba(255,255,255,0.15);display:flex;justify-content:space-between;font-variant-numeric:tabular-nums;}
+  .setlist li:last-child{border:none;}
+  .setlist li b{color:#999;font-weight:600;}
+  .wall-card{width:200px;background:#999;padding:14px;margin-top:24px;}
+  .wall-card .scrawl{font-family:'Permanent Marker',cursive;color:#0a0a0a;font-size:22px;line-height:1;text-transform:uppercase;transform:rotate(-2deg);}
+  .wall-card .sub{font-family:'Permanent Marker',cursive;color:#0a0a0a;font-size:14px;margin-top:10px;transform:rotate(1deg);text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="lbl">CARDS — THREE STYLES</div>
+  <div class="flyer">
+    <span class="tape">NYHET</span>
+    <h3>Knut Aalefjær</h3>
+    <p>Solo perkusjon, prepared cymbals, and one tape loop.</p>
+    <div class="meta"><span>FRI 21:00</span><span>SAL 2</span></div>
+  </div>
+  <div class="setlist">
+    <h4>Sett A</h4>
+    <ol>
+      <li><span>01 · drone</span><b>04:12</b></li>
+      <li><span>02 · gjentakelse</span><b>06:48</b></li>
+      <li><span>03 · monitor</span><b>03:30</b></li>
+      <li><span>04 · stille</span><b>08:00</b></li>
+      <li><span>05 · enda mer</span><b>—</b></li>
+    </ol>
+  </div>
+  <div class="wall-card">
+    <div class="scrawl">50 år.<br/>én helg.</div>
+    <div class="sub">det blir bra</div>
+  </div>
+</div>
+</body></html>

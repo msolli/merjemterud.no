@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html,body{margin:0;padding:0;background:var(--paper);overflow:hidden;font-family:var(--font-body);}
+  .card{width:700px;height:340px;padding:24px 28px;position:relative;}
+  .lbl{font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#666;margin-bottom:14px;}
+  .row{display:flex;align-items:baseline;gap:14px;padding:6px 0;border-bottom:1px dashed rgba(0,0,0,0.1);}
+  .row:last-child{border:none;}
+  .spec{flex:0 0 120px;font-family:var(--font-mono);font-size:11px;color:#666;}
+  .demo{font-family:'Open Sans',sans-serif;color:#181818;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="lbl">BODY — OPEN SANS</div>
+  <div class="row">
+    <div class="spec">800 / 28px</div>
+    <div class="demo" style="font-weight:800;font-size:28px;text-transform:uppercase;letter-spacing:0.02em;">Section heading</div>
+  </div>
+  <div class="row">
+    <div class="spec">700 / 18px</div>
+    <div class="demo" style="font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:0.04em;">Subhead / UI label</div>
+  </div>
+  <div class="row">
+    <div class="spec">600 / 16px</div>
+    <div class="demo" style="font-weight:600;font-size:16px;">UI / buttons / nav items</div>
+  </div>
+  <div class="row">
+    <div class="spec">400 / 18px</div>
+    <div class="demo" style="font-weight:400;font-size:18px;">Lead paragraph — slightly larger body for opening sentences.</div>
+  </div>
+  <div class="row">
+    <div class="spec">400 / 16px</div>
+    <div class="demo" style="font-weight:400;font-size:16px;">Body text. The default. Friends, for friends — never corporate.</div>
+  </div>
+  <div class="row">
+    <div class="spec">400 / 14px · #666</div>
+    <div class="demo" style="font-weight:400;font-size:14px;color:#666;">Small / secondary copy. Captions. Footnotes.</div>
+  </div>
+  <div class="row">
+    <div class="spec">700 / 12px · 0.12em</div>
+    <div class="demo" style="font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:0.12em;color:#666;">Eyebrow / pretitle</div>
+  </div>
+</div>
+</body></html>

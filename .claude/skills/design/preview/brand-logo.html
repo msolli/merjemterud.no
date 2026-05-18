@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html,body{margin:0;padding:0;background:#0a0a0a;overflow:hidden;font-family:var(--font-body);}
+  .card{width:700px;height:260px;position:relative;overflow:hidden;background:#0a0a0a;}
+  .bg{position:absolute;inset:0;background-image:radial-gradient(circle at 30% 40%,#3a3a3a 0,#0a0a0a 60%);}
+  .grain{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.04) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(255,255,255,0.04) 0 1px,transparent 1px 3px);mix-blend-mode:overlay;opacity:0.6;}
+  .logo{position:absolute;width:520px;left:50%;top:50%;transform:translate(-50%,-50%);}
+  .lbl{position:absolute;top:14px;left:24px;font-family:var(--font-body);font-weight:700;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#999;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="bg"></div>
+  <div class="grain"></div>
+  <div class="lbl">PRIMARY LOGO</div>
+  <img src="../assets/logo.png" class="logo" alt="ENDA MER JEMTERUD I MONITOR PLIS" />
+</div>
+</body></html>

@@ -1,0 +1,211 @@
+/* =============================================================
+   JEMTERUD FESTIVAL — Colors & Type
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&family=Permanent+Marker&display=swap');
+
+:root {
+  /* ── Brand colors ───────────────────────────────────────── */
+  --tape-yellow:      #ffe850;   /* gaffer tape */
+  --tape-yellow-dim:  #f0d83a;   /* aged/under-shadow tape */
+  --marker-black:     #0a0a0a;   /* permanent marker ink */
+  --ink:              #181818;   /* body text on light */
+  --concrete-grey:    #999999;   /* the wall — host for marker glyphs */
+  --studio-grey:      #666666;   /* secondary text on light */
+  --paper:            #f6f4ef;   /* warm off-white surface */
+  --paper-deep:       #ecead9;   /* slightly recessed surface */
+  --white:            #ffffff;
+
+  /* ── Accents (used sparingly) ───────────────────────────── */
+  --freq-red:         #e63946;   /* "ON AIR" red, error */
+  --osc-cyan:         #7fd4d4;   /* oscilloscope trace, links on dark */
+
+  /* ── Semantic ───────────────────────────────────────────── */
+  --bg:               var(--paper);
+  --bg-alt:           var(--paper-deep);
+  --bg-wall:          var(--concrete-grey);
+  --bg-stage:         var(--marker-black);
+  --fg:               var(--ink);
+  --fg-muted:         var(--studio-grey);
+  --fg-faint:         var(--concrete-grey);
+  --fg-on-dark:       var(--paper);
+  --fg-on-yellow:     var(--marker-black);
+  --accent:           var(--tape-yellow);
+  --danger:           var(--freq-red);
+  --link:             var(--marker-black);
+  --link-on-dark:     var(--osc-cyan);
+
+  --border:           var(--marker-black);
+  --border-faint:     rgba(10,10,10,0.15);
+
+  /* ── Type families ──────────────────────────────────────── */
+  --font-marker:      'Permanent Marker', 'Comic Sans MS', cursive;
+  --font-body:        'Open Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:        'JetBrains Mono', 'Courier New', monospace;
+
+  /* ── Type scale (modular, ~1.25) ────────────────────────── */
+  --t-xs:    12px;
+  --t-sm:    14px;
+  --t-base:  16px;
+  --t-md:    18px;
+  --t-lg:    22px;
+  --t-xl:    28px;
+  --t-2xl:   36px;
+  --t-3xl:   48px;
+  --t-4xl:   72px;
+  --t-5xl:   112px;
+  --t-6xl:   160px;
+
+  /* ── Line height ────────────────────────────────────────── */
+  --lh-tight:  1.05;
+  --lh-snug:   1.2;
+  --lh-normal: 1.5;
+  --lh-loose:  1.7;
+
+  /* ── Spacing scale (4px base) ───────────────────────────── */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10: 128px;
+
+  /* ── Radii (mostly zero — brutalist) ────────────────────── */
+  --r-none: 0;
+  --r-sm:   2px;
+  --r-md:   4px;
+  --r-pill: 999px;
+  --r-full: 50%;
+
+  /* ── Borders ────────────────────────────────────────────── */
+  --bw-hair:    1px;
+  --bw-base:    1.5px;
+  --bw-thick:   3px;
+  --bw-heavy:   4px;
+
+  /* ── Hard offset shadows (no blur) ──────────────────────── */
+  --shadow-sm:    2px 2px 0 var(--marker-black);
+  --shadow-md:    4px 4px 0 var(--marker-black);
+  --shadow-lg:    6px 6px 0 var(--marker-black);
+  --shadow-yellow:4px 4px 0 var(--tape-yellow);
+
+  /* ── Motion ─────────────────────────────────────────────── */
+  --ease-snap:   cubic-bezier(.2,.8,.2,1);
+  --t-instant:   0ms;
+  --t-quick:     80ms;
+  --t-tape:      200ms;
+}
+
+/* =============================================================
+   Base type
+   ============================================================= */
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  line-height: var(--lh-normal);
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Display: handwriting on tape/wall ─────────────────────── */
+.t-marker {
+  font-family: var(--font-marker);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+  line-height: var(--lh-tight);
+  color: var(--marker-black);
+}
+
+h1, .h1 {
+  font-family: var(--font-marker);
+  font-size: var(--t-4xl);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: var(--marker-black);
+  margin: 0;
+}
+
+h2, .h2 {
+  font-family: var(--font-marker);
+  font-size: var(--t-2xl);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  color: var(--marker-black);
+  margin: 0;
+}
+
+h3, .h3 {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: var(--t-xl);
+  line-height: var(--lh-snug);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin: 0;
+}
+
+h4, .h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--t-md);
+  line-height: var(--lh-snug);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--t-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--studio-grey);
+}
+
+p, .p {
+  font-size: var(--t-base);
+  line-height: var(--lh-normal);
+  color: var(--ink);
+  margin: 0;
+}
+
+.p-lead {
+  font-size: var(--t-md);
+  line-height: var(--lh-normal);
+  font-weight: 400;
+}
+
+.p-small {
+  font-size: var(--t-sm);
+  line-height: var(--lh-normal);
+  color: var(--studio-grey);
+}
+
+.t-mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+  letter-spacing: 0;
+}
+
+.t-num {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+a:hover { background: var(--tape-yellow); text-decoration: none; padding: 0 2px; margin: 0 -2px; }
