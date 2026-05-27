@@ -1,0 +1,38 @@
+[;; Extra page attributes used by content/index.md (the front page).
+ ;; Powerpack stores every page in Datomic, so every mapdown key must be
+ ;; declared here (it already ships :page/uri, :page/title and :page/body).
+
+ ;; Hero
+ {:db/ident       :hero/kicker
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :hero/title
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :hero/tagline
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :hero/lead
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ ;; Intro / program
+ {:db/ident       :intro/body
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ ;; Bursdagspresang / tickets
+ {:db/ident       :gift/title
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :gift/body
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ ;; Call to action
+ {:db/ident       :cta/label
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :cta/url
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}]

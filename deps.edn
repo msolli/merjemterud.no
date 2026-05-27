@@ -1,0 +1,5 @@
+{:paths   ["src" "resources"]
+ :deps    {org.clojure/clojure    {:mvn/version "1.12.4"}
+           no.cjohansen/powerpack {:mvn/version "2026.01.1"}}
+ :aliases {:dev {:extra-paths ["dev"]}
+           :build {:exec-fn merjemterud.export/export!}}}

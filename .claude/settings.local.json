@@ -3,7 +3,12 @@
     "allow": [
       "Bash(rtk ls *)",
       "Read(//private/tmp/**)",
-      "Bash(rtk curl *)"
+      "Bash(rtk curl *)",
+      "WebFetch(domain:pages.oiiku.com)",
+      "Bash(unzip -o -q /Users/martin/.m2/repository/no/cjohansen/powerpack/2023.12.21/powerpack-2023.12.21.jar powerpack/ingest.clj powerpack/page.clj -d /tmp/ppk)",
+      "Bash(rtk read *)",
+      "Bash(unzip -o -q /Users/martin/.m2/repository/no/cjohansen/powerpack/2023.12.21/powerpack-2023.12.21.jar -d /tmp/ppk2)",
+      "Read(//tmp/**)"
     ]
   }
 }
