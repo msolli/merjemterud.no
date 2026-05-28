@@ -18,6 +18,16 @@ Og det hele skjer ved en sluse i Dalslands kanal i de svenske skoger. Tre scener
 
 Mer info om program, overnatting og beliggenhet kommer.
 
+:teaser/body
+
+Svartskog Spelemannslag, Tusmørke, Moaners, Dromedar, Higgs Boson og flere er bekrefta. Auksjon, samtidsdans, badstue og foredrag på toppen. Mer kommer.
+
+:who/title Hvem kan melde seg på?
+
+:who/body
+
+Alle jeg kjenner: venner og bekjente. Du kan også ta med en venn eller to, men aller helst noen jeg i det minste har hilst på.
+
 :gift/title Bursdagspresang
 
 :gift/body

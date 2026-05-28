@@ -35,4 +35,48 @@
   :db/cardinality :db.cardinality/one}
  {:db/ident       :cta/url
   :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ ;; Front-page program teaser
+ {:db/ident       :teaser/body
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ ;; Hvem kan melde seg på?
+ {:db/ident       :who/title
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :who/body
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ ;; Program page (/program)
+ {:db/ident       :program/note
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :program/fredag
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :program/lordag
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :program/aktiviteter
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :program/foredrag
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+
+ ;; Praktisk page (/praktisk)
+ {:db/ident       :sted/body
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :overnatting/body
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :mat/body
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :transport/body
+  :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}]

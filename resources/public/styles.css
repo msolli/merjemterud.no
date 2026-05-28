@@ -114,6 +114,63 @@ a:hover { background: var(--tape-yellow); text-decoration: none; }
 }
 @keyframes pip-blink { 50% { opacity: 0.25; } }
 
+/* ── Top nav ─────────────────────────────────────────────────── */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 28px;
+  padding: 14px 32px;
+  background: var(--paper);
+  border-bottom: 1.5px solid var(--marker-black);
+}
+.topnav__brand {
+  text-decoration: none;
+  color: var(--marker-black);
+  line-height: 1;
+}
+.topnav__brand:hover { background: transparent; }
+.topnav__name {
+  display: block;
+  font-family: var(--font-marker);
+  font-size: 26px;
+  text-transform: uppercase;
+}
+.topnav__sub {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--studio-grey);
+}
+.topnav__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-left: auto;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.topnav__link {
+  padding: 6px 8px 5px;
+  text-decoration: none;
+  color: var(--marker-black);
+  border-bottom: 2px solid transparent;
+}
+.topnav__link:hover { background: var(--tape-yellow); }
+.topnav__link--active {
+  background: var(--concrete-grey);
+  border-bottom-color: var(--marker-black);
+}
+.topnav__cta { padding: 9px 18px; font-size: 12px; }
+
 /* ── Hero ────────────────────────────────────────────────────── */
 .hero {
   position: relative;
@@ -229,6 +286,41 @@ a:hover { background: var(--tape-yellow); text-decoration: none; }
 .prose p { margin: 0 0 18px; font-size: 18px; line-height: 1.6; }
 .prose p:last-child { margin-bottom: 0; }
 .prose a { font-weight: 700; }
+.prose ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.prose li {
+  position: relative;
+  padding: 8px 0 8px 26px;
+  font-size: 18px;
+  line-height: 1.4;
+  border-bottom: 1px dashed rgba(10, 10, 10, 0.2);
+}
+.prose li::before {
+  content: "●";
+  position: absolute;
+  left: 0;
+  font-size: 13px;
+  color: var(--freq-red);
+}
+
+/* ── Content blocks (Program / Praktisk) ─────────────────────── */
+.block { margin-top: 44px; }
+.block:first-of-type { margin-top: 28px; }
+.block__title {
+  margin: 0 0 16px;
+  font-family: var(--font-marker);
+  font-size: clamp(22px, 4vw, 34px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--marker-black);
+}
+
+/* ── Front-page program teaser ───────────────────────────────── */
+.teaser { margin-top: 40px; }
+.teaser .prose { margin-bottom: 22px; }
 
 /* ── Fact chips ──────────────────────────────────────────────── */
 .facts {
