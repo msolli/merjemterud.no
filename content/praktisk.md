@@ -1,4 +1,4 @@
-:page/uri /praktisk/
+:page/uri /praktisk.html
 
 :page/title Praktisk
 

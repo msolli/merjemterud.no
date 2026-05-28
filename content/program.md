@@ -1,4 +1,4 @@
-:page/uri /program/
+:page/uri /program.html
 
 :page/title Program
 

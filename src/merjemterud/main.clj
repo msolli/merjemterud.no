@@ -17,8 +17,8 @@
 
 (def nav-items
   [["/" "Festivalen"]
-   ["/program/" "Program"]
-   ["/praktisk/" "Praktisk"]])
+   ["/program.html" "Program"]
+   ["/praktisk.html" "Praktisk"]])
 
 (defn site-nav
   [page]
@@ -103,7 +103,7 @@
              [:li.tape.tape--grey "kanal + innsjø"]]
             [:div.teaser
              (prose (:teaser/body page))
-             [:a.btn.btn--ghost {:href "/program/"} "Se hele programmet →"]]]]
+             [:a.btn.btn--ghost {:href "/program.html"} "Se hele programmet →"]]]]
 
           ;; ── Bursdagspresang ──
           [:section.section.section--wall
@@ -158,8 +158,8 @@
 (defn render-page
   [_context page]
   (case (:page/uri page)
-    "/program/" (program-page page)
-    "/praktisk/" (praktisk-page page)
+    "/program.html" (program-page page)
+    "/praktisk.html" (praktisk-page page)
     (landing page)))
 
 (def config
