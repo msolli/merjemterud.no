@@ -17,11 +17,13 @@
 - Blikstilt
 - Det Förflutna
 - Muru
+- Onkel negerslem
 - Tusmørke
 
 :program/lordag
 
 - Oslo Skrotum
+- Märklin
 - Tesalongen
 - Ove og Eivinds Bluegrass Experience
 - Moaners (hele veien fra Bergen)
@@ -37,7 +39,9 @@
 - Moderne-dans-disco (for de med bestått samtidsdanskurs)
 - Workshop i landskapsmaleri med strap-on-pensel
 - Krasjkurs i synkronsvømming
-- Badstue og jacuzzi
+- Donald-tegnekurs v/Arild Midthun
+- Badstue og badestamp
+- Death Metal-badstue (men kanskje ikke hele tiden)
 - Natursti
 
 :program/foredrag
