@@ -17,7 +17,7 @@
 - Blikstilt
 - Det Förflutna
 - Muru
-- Onkel negerslem
+- Onkel Negerslem
 - Tusmørke
 
 :program/lordag
