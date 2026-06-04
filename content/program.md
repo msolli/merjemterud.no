@@ -8,7 +8,7 @@
 
 :program/note
 
-(Det som er bekrefta nå, mer vil følge)
+(Det som er bekrefta nå, mer vil følge. Og det kommer garantert til å bli endringer i programmet framover. Kan ikke garantere at alle band spiller på oppsatt dag. Følg med, følg med.)
 
 :program/fredag
 
@@ -18,7 +18,7 @@
 - Det Förflutna
 - Muru
 - Onkel Negerslem
-- Tusmørke
+- Arnfinn Nesset
 
 :program/lordag
 
@@ -30,6 +30,7 @@
 - Higgs Boson
 - Arnfinn Nesset
 - Dromedar
+- Tussmørke
 - Hemmelig overraskelse (TBA)
 
 :program/aktiviteter

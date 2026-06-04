@@ -14,9 +14,23 @@ Festivalen finner sted på et sted som heter [Alcatraz](https://www.alcatraz.se/
 
 Alcatraz har et fantastisk campingområde hvor man kan slå opp telt, eller sette bobil eller campingvogn. Dette blir selve festivalcampen. Man må betale, men får da tilgang på dusj, toaletter, strøm og andre campingfasiliteter.
 
-Hvis du trenger ordentlig seng, så finnes det rom på vandrerhjemdelen av Alcatraz og på Röynes Sjömagasin 100 meter unna.
+Hvis du trenger ordentlig seng, så finnes det rom på vandrerhjemdelen av Alcatraz og på Roynes sjömagasin 100 meter
+unna. Dette må reserveres gjennom påmeldingsskjemaet.
 
 Vil du trekke deg litt unna for natta, så finnes det campingplasser og vandrerhjem noen kilometer unna, og et hotell i Årjäng.
+
+Her er det bare å ta kontakt med overnattingsstedene direkte, førstemann til mølla.
+
+For reservasjon hos Roynes må du oppgi at du skal på festival, alle rommene der er holdt av. For alle andre steder er
+det fritt fram. Det siste alternativet listet her: Folsom vandrerhjem i Blomskog drives av de samme som driver Alcatraz,
+og de tilbyr også kjøring til og fra mot betaling. Også her foregår booking direkte, og ikke gjennom påmeldingsskjemaet.
+
+Lenker:
+
+- [Roynes sjömagasin](https://www.roynesmagasin.se/)
+- [Hotell Årjäng](https://hotellarjang.com/)
+- [Vammervikens Camping](https://vammervikenscamping.se/)
+- [Folsom vandrarhem](https://folsom.se/)
 
 :mat/body
 
