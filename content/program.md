@@ -46,7 +46,7 @@
 
 :program/foredrag
 
-- Om Teslasteiken – ved Svenska Facket
+- Om Teslastreiken – ved Svenska Facket
 - Om Helvete – ved Kristoffer Momrak
 - Partikkelfysikk på 123 – ved Are Raklev og Anders Kvellestad
 - Tenker maskinene nå? – ved Inga Strümke
