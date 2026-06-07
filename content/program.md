@@ -17,7 +17,6 @@
 - Blikstilt
 - Det Förflutna
 - Muru
-- Onkel Negerslem
 - Arnfinn Nesset
 
 :program/lordag
@@ -28,9 +27,9 @@
 - Ove og Eivinds Bluegrass Experience
 - Moaners (hele veien fra Bergen)
 - Higgs Boson
-- Arnfinn Nesset
 - Dromedar
-- Tussmørke
+- Onkel
+- Tusmørke
 - Hemmelig overraskelse (TBA)
 
 :program/aktiviteter
