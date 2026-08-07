@@ -16,11 +16,9 @@ En sensommerhelg med konserter med de beste banda, mingling og preiking med de b
 
 Og det hele skjer ved en sluse i Dalslands kanal i de svenske skoger. Tre scener, to serveringssteder og vandrerhjem, egen festivalcamp, en kanal og en innsjø.
 
-Mer info om program, overnatting og beliggenhet kommer.
-
 :teaser/body
 
-Svartskog Spelemannslag, Tusmørke, Moaners, Dromedar, Higgs Boson og flere er bekrefta. Auksjon, samtidsdans, badstue og foredrag på toppen. Mer kommer.
+Svartskog Spelemannslag, Tusmørke, Moaners, Dromedar, Higgs Boson og flere er bekrefta. Auksjon, samtidsdans, badstue og foredrag på toppen.
 
 :who/title Hvem kan melde seg på?
 
