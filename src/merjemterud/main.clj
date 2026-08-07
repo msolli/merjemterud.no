@@ -1,5 +1,6 @@
 (ns merjemterud.main
   (:require [clojure.string :as str]
+            [merjemterud.program :as program]
             [powerpack.markdown :as md]))
 
 (defn prose
@@ -126,18 +127,82 @@
 
 ;; ── Program page ───────────────────────────────────────────
 
+(defn radio-strip
+  "Radio Jemterud isn't on any stage — it gets a banner above the grids."
+  [text]
+  (when (not-empty text)
+    [:div.radio
+     [:span.onair [:span.onair__pip] "On air"]
+     [:p.radio__text text]]))
+
+(defn slot
+  "One event. The time/stage line is hidden on wide screens, where the grid
+   already says both, and shown when the grid collapses to a list."
+  [{:keys [time stage title blurb]}]
+  [:div.slot
+   [:p.slot__meta
+    [:span.slot__time time]
+    [:span.slot__stage stage]]
+   [:h3.slot__title title]
+   (when blurb [:p.slot__blurb blurb])])
+
+(defn runsheet
+  "Stage columns × time rows. Every cell is placed explicitly, so document
+   order is free to be chronological — that's what the phone layout reads."
+  [{:keys [stages rows]}]
+  (let [column (zipmap stages (map #(+ % 2) (range)))]
+    [:div.runsheet
+     {:style (str "grid-template-columns: var(--runsheet-gutter) repeat("
+                  (count stages) ", minmax(0, 1fr))")}
+     ;; Opaque bar behind the sticky stage labels, so rows scroll under
+     ;; the header instead of showing through it.
+     [:div.runsheet__stagebar {:style "grid-column:1/-1;grid-row:1"}]
+     (for [stage stages]
+       [:div.runsheet__stage {:style (str "grid-column:" (column stage) ";grid-row:1")}
+        [:span.tape.tape--yellow stage]])
+     (for [[i {:keys [time cells]}] (map-indexed vector rows)
+           :let [row (+ i 2)]]
+       (list
+        [:div.runsheet__rule {:style (str "grid-column:1/-1;grid-row:" row)}]
+        [:div.runsheet__time {:style (str "grid-column:1;grid-row:" row)} time]
+        (for [stage stages
+              :let [events (get cells stage)]
+              :when (seq events)]
+          [:div.runsheet__cell {:style (str "grid-column:" (column stage) ";grid-row:" row)}
+           (map slot events)])))]))
+
+(defn runsheet-block
+  [title source]
+  (when (not-empty source)
+    (let [data (program/parse-block title source)]
+      [:div.runsheet-block
+       [:h2.block__title title]
+       [:p.runsheet-block__span (program/time-span data)]
+       (runsheet data)])))
+
+(defn chip-strip
+  "Comma-separated things that run all weekend, with no time of their own."
+  [title source]
+  (when (not-empty source)
+    [:div.runsheet-block
+     [:h2.block__title title]
+     [:ul.facts
+      (for [item (map str/trim (str/split source #","))]
+        [:li.tape.tape--grey item])]]))
+
 (defn program-page
   [page]
   (layout page
           [:section.section.section--paper
            [:div.section__inner
             [:div.eyebrow-row [:span.tape.tape--yellow "Program"]]
-            [:h1.section__title "Foreløpig program"]
+            [:h1.section__title "Program"]
             (prose (:program/note page))
-            (content-block "Konserter fredag" (:program/fredag page))
-            (content-block "Konserter lørdag" (:program/lordag page))
-            (content-block "Andre aktiviteter" (:program/aktiviteter page))
-            (content-block "Foredrag og debatter" (:program/foredrag page))]]
+            (radio-strip (:program/radio page))
+            (runsheet-block "Fredag" (:program/fredag-kveld page))
+            (runsheet-block "Lørdag dag" (:program/lordag-dag page))
+            (runsheet-block "Lørdag kveld" (:program/lordag-kveld page))
+            (chip-strip "Andre aktiviteter" (:program/andre page))]]
           (cta-band page)))
 
 ;; ── Praktisk page ──────────────────────────────────────────

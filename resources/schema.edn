@@ -50,20 +50,24 @@
   :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}
 
- ;; Program page (/program)
+ ;; Program page (/program). The three runsheet blocks hold a stage header line
+ ;; plus `HH:MM | Stage | Title | Blurb` lines — see merjemterud.program.
  {:db/ident       :program/note
   :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}
- {:db/ident       :program/fredag
+ {:db/ident       :program/radio
   :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}
- {:db/ident       :program/lordag
+ {:db/ident       :program/fredag-kveld
   :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}
- {:db/ident       :program/aktiviteter
+ {:db/ident       :program/lordag-dag
   :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}
- {:db/ident       :program/foredrag
+ {:db/ident       :program/lordag-kveld
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :program/andre
   :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}
 

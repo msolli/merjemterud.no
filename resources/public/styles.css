@@ -25,6 +25,8 @@
   --shadow-yellow: 4px 4px 0 var(--tape-yellow);
 
   --maxw: 1160px;
+  /* Height of the sticky .topnav — runsheet stage headers stick below it. */
+  --nav-h: 74px;
 }
 
 * { box-sizing: border-box; }
@@ -316,6 +318,126 @@ a:hover { background: var(--tape-yellow); text-decoration: none; }
   line-height: 1;
   text-transform: uppercase;
   color: var(--marker-black);
+}
+
+/* ── Program runsheet ────────────────────────────────────────
+   Stage columns, time rows. Collapses to one chronological list
+   on a phone, where "what's on now" beats "which stage". */
+.radio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 18px;
+  margin-top: 32px;
+  padding: 18px 22px;
+  background: var(--paper-deep);
+  border: 1.5px solid var(--marker-black);
+  box-shadow: var(--shadow-grey);
+}
+.radio__text {
+  margin: 0;
+  max-width: 62ch;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.runsheet-block { margin-top: 56px; }
+.runsheet-block .block__title { margin-bottom: 4px; }
+.runsheet-block__span {
+  margin: 0 0 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--studio-grey);
+}
+
+.runsheet {
+  --runsheet-gutter: 72px;
+  display: grid;
+  column-gap: 24px;
+  border-bottom: 1px dashed rgba(10, 10, 10, 0.2);
+}
+.runsheet__stagebar {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 1;
+  background: var(--paper);
+  border-bottom: 1.5px solid var(--marker-black);
+}
+.runsheet__stage {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 2;
+  padding-bottom: 14px;
+}
+.runsheet__stage .tape {
+  font-size: 17px;
+  transform: rotate(-1deg);
+}
+.runsheet__rule { border-top: 1px dashed rgba(10, 10, 10, 0.2); }
+.runsheet__time {
+  padding: 16px 0 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--studio-grey);
+}
+.runsheet__cell { padding: 14px 0 18px; }
+
+.slot + .slot { margin-top: 16px; }
+.slot__meta { display: none; }
+.slot__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.slot__blurb {
+  margin: 5px 0 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--studio-grey);
+}
+
+/* Phone: the grid becomes a time-ordered list, and each slot starts
+   carrying the time and stage the gutter and headers used to show. */
+@media (max-width: 760px) {
+  .runsheet {
+    display: flex;
+    flex-direction: column;
+    border-bottom: none;
+  }
+  .runsheet__stagebar,
+  .runsheet__stage,
+  .runsheet__time,
+  .runsheet__rule { display: none; }
+  .runsheet__cell {
+    padding: 14px 0 16px;
+    border-top: 1px dashed rgba(10, 10, 10, 0.2);
+  }
+  .slot__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 7px;
+  }
+  .slot__time {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--studio-grey);
+  }
+  .slot__stage {
+    font-family: var(--font-marker);
+    font-size: 12px;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--marker-black);
+    background: var(--concrete-grey);
+    padding: 4px 8px 3px;
+  }
 }
 
 /* ── Front-page program teaser ───────────────────────────────── */
