@@ -19,7 +19,7 @@ Radio Jemterud starter fredag 12.00. Streames på denne sida. Preiking, musikk o
 Hovedscena, Pubscena
 
 17:30 | Hovedscena | Offisiell åpning ved festivalledelsen | Inkl.: Analyse av den norrøne guden for pønk
-18:00 | Pubscena   | Performance | (Trolig ved Pernille)
+18:00 | Pubscena   | Performance |
 18:30 | Hovedscena | Blikstilt | Nøkkelharpe og piano. Vakkert, vakkert.
 19:30 | Hovedscena | Svartskog spelemannslag | Inkluderende folkemusikk av ypperste kaliber
 20:30 | Hovedscena | Det förflutna | Jemterud-koffert
