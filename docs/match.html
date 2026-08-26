@@ -1,0 +1,939 @@
+<!DOCTYPE html><html lang="no"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merjemterud Match 🎪</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Permanent+Marker&amp;display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        fest: {
+                            pink: '#ff2a85',
+                            yellow: '#ffcc00',
+                            purple: '#7928ca',
+                            dark: '#0e0e12',
+                            card: '#181820',
+                            accent: '#00e5ff'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        marker: ['Permanent Marker', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #08080a;
+            color: #f3f4f6;
+            touch-action: manipulation;
+        }
+        .fest-gradient-text {
+            background: linear-gradient(135deg, #ff2a85 0%, #ffcc00 50%, #00e5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .fest-card-shadow {
+            box-shadow: 0 10px 30px -5px rgba(255, 42, 133, 0.3);
+        }
+        /* Utklipps-logo stil (som på festivalens profilering) */
+        .sticker-box {
+            background-color: #9ca3af;
+            color: #000000;
+            font-family: 'Permanent Marker', cursive;
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            box-shadow: 3px 4px 8px rgba(0,0,0,0.5);
+            line-height: 1.1;
+            text-transform: uppercase;
+            border-radius: 2px;
+            letter-spacing: 0.03em;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0e0e12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff2a85;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans max-w-md mx-auto relative bg-fest-dark border-x border-gray-800 shadow-2xl">
+
+    <header class="sticky top-0 z-40 bg-fest-dark/95 backdrop-blur-md border-b border-gray-800 p-3 flex justify-between items-center">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('match-view')">
+            <!-- Header mini-sticker logo -->
+            <div class="flex flex-col gap-0.5">
+                <div class="flex gap-1">
+                    <span class="sticker-box -rotate-2 text-[10px] px-1.5 py-0.5">ENDA MER</span>
+                    <span class="sticker-box rotate-1 text-[10px] px-1.5 py-0.5">JEMTERUD</span>
+                </div>
+                <div class="flex gap-1">
+                    <span class="sticker-box rotate-2 text-[10px] px-1.5 py-0.5">I MONITOR</span>
+                    <span class="sticker-box -rotate-1 text-[10px] px-1.5 py-0.5 bg-fest-pink text-white">MATCH</span>
+                </div>
+            </div>
+        </div>
+        <div id="user-badge" class="hidden flex items-center gap-2 bg-gray-900/90 px-3 py-1.5 rounded-full border border-gray-700">
+            <img id="header-avatar" class="w-6 h-6 rounded-full object-cover bg-gray-800" alt="Profil">
+            <span id="header-alias" class="text-xs font-semibold text-gray-200"></span>
+            <button onclick="editProfile()" class="text-xs text-fest-pink hover:text-white ml-1" title="Rediger profil">
+                <i class="fa-solid fa-pen"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-1 p-4 pb-24 overflow-y-auto">
+
+        <!-- SECTION 0: WELCOME SCREEN -->
+        <section id="sec-welcome" class="space-y-6 text-center py-6">
+            <!-- Full cut-out logo banner for Merjemterud -->
+            <div class="relative inline-block my-2">
+                <div class="flex flex-col items-center gap-2 p-4 bg-gray-950/80 rounded-3xl border border-gray-800/80 shadow-2xl">
+                    <div class="flex gap-2">
+                        <span class="sticker-box -rotate-3 text-lg md:text-xl px-3 py-1">ENDA MER</span>
+                        <span class="sticker-box rotate-2 text-lg md:text-xl px-3 py-1">JEMTERUD</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="sticker-box rotate-1 text-xl md:text-2xl px-4 py-1">I MONITOR</span>
+                        <span class="sticker-box -rotate-2 text-xl md:text-2xl px-4 py-1">PLIS</span>
+                    </div>
+                    <div class="mt-2">
+                        <span class="sticker-box rotate-3 text-xs px-3 py-1 bg-fest-pink text-white tracking-widest shadow-lg">FESTIVAL MATCH 🎪</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <h2 class="text-3xl font-extrabold text-white tracking-tight">Velkommen til <span class="fest-gradient-text">Merjemterud Match</span></h2>
+                <p class="text-xs text-gray-400 max-w-xs mx-auto leading-relaxed">
+                    Enda mer Jemterud i monitor plis! Finn en konsertkompis, noen å spille i band med, en sjelevenn til djupe samtaler – eller ditt neste festivalblikk.
+                </p>
+            </div>
+
+            <div class="bg-gray-900/90 p-4 rounded-2xl border border-gray-800 text-left text-xs text-gray-300 space-y-2">
+                <div class="flex items-center gap-2 font-bold text-fest-yellow">
+                    <i class="fa-solid fa-sparkles"></i> Slik funker det:
+                </div>
+                <p>1. Velg hva du er ute etter på festivalen.</p>
+                <p>2. Fyll ut profilen din og tegn eller last opp bilde.</p>
+                <p>3. Få opp én treffsikker match om gangen med samtalestartere!</p>
+            </div>
+
+            <button onclick="startOnboarding()" class="w-full py-4 bg-gradient-to-r from-fest-pink via-purple-600 to-fest-accent text-white font-bold rounded-2xl shadow-lg hover:opacity-95 active:scale-95 transition-all text-lg flex items-center justify-center gap-2">
+                 Lag Profil &amp; Start Matching <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </section>
+
+        <!-- SECTION 1: ONBOARDING WIZARD -->
+        <section id="sec-wizard" class="hidden space-y-6">
+            <!-- Progress Bar -->
+            <div class="flex items-center justify-between px-2 text-xs font-semibold text-gray-400">
+                <span id="step-indicator">Steg 1 av 3</span>
+                <div class="flex gap-1.5" id="step-dots">
+                    <div class="w-8 h-1.5 rounded-full bg-fest-pink step-dot"></div>
+                    <div class="w-8 h-1.5 rounded-full bg-gray-700 step-dot"></div>
+                    <div class="w-8 h-1.5 rounded-full bg-gray-700 step-dot"></div>
+                </div>
+            </div>
+
+            <form id="profile-form" onsubmit="handleWizardSubmit(event)">
+                
+                <!-- STEP 1: PREFERENCES -->
+                <div id="wizard-step-1" class="wizard-step space-y-5">
+                    <div class="border-b border-gray-800 pb-3">
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-compass text-fest-pink"></i> Hva er du interessert i?
+                        </h3>
+                        <p class="text-xs text-gray-400">Velg det som passer dagsformen din på festivalen.</p>
+                    </div>
+
+                    <!-- Romantiske møter -->
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-bold text-fest-pink uppercase tracking-wider flex items-center gap-1">
+                            <i class="fa-solid fa-heart"></i> Romantiske møter med...
+                        </label>
+                        <select id="pref-romantic" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-fest-pink outline-none">
+                            <option value="Ikke aktuelt nå. Sorry.">Ikke aktuelt nå. Sorry.</option>
+                            <option value="Mann">Mann</option>
+                            <option value="Kvinne">Kvinne</option>
+                            <option value="Spiller ingen rolle">Spiller ingen rolle</option>
+                        </select>
+                    </div>
+
+                    <!-- Musikk -->
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-bold text-fest-yellow uppercase tracking-wider flex items-center gap-1">
+                            <i class="fa-solid fa-guitar"></i> MUSIKK!
+                        </label>
+                        <select id="pref-music" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-fest-yellow outline-none">
+                            <option value="Noen å henge på konsert med">Noen å henge på konsert med</option>
+                            <option value="Noen å (kanskje) spille i band med">Noen å (kanskje) spille i band med</option>
+                            <option value="Noen å nørde om musikk med">Noen å nørde om musikk med</option>
+                            <option value="Musikk? Hvem bryr seg ... egentlig?">Musikk? Hvem bryr seg ... egentlig?</option>
+                        </select>
+                    </div>
+
+                    <!-- Bli kjent -->
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-bold text-fest-accent uppercase tracking-wider flex items-center gap-1">
+                            <i class="fa-solid fa-comments"></i> Bli kjent:
+                        </label>
+                        <select id="pref-social" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-fest-accent outline-none">
+                            <option value="Djupe samtaler med min nye sjelevenn">Djupe samtaler med min nye sjelevenn</option>
+                            <option value="Random prat med random person">Random prat med random person</option>
+                            <option value="Ny nasjkompis">Ny nasjkompis</option>
+                            <option value="Ikke interessert!">Ikke interessert!</option>
+                        </select>
+                    </div>
+
+                    <button type="button" onclick="nextStep(2)" class="w-full py-3.5 bg-fest-pink text-white font-bold rounded-xl shadow-md hover:bg-pink-600 transition flex items-center justify-center gap-2">
+                        Neste: Personalia <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- STEP 2: PERSONALIA & CANVAS / IMAGE -->
+                <div id="wizard-step-2" class="wizard-step hidden space-y-4">
+                    <div class="border-b border-gray-800 pb-2">
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-user text-fest-yellow"></i> Personalia
+                        </h3>
+                        <p class="text-xs text-fest-yellow italic mt-1">
+                            "Her kan du ljuge eller fylle ut akkurat så mye du vil"
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-xs font-bold text-gray-300">Navn</label>
+                            <input type="text" id="field-name" placeholder="f.eks. Ola" required="" class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-sm text-white focus:border-fest-pink outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold text-gray-300">Alder</label>
+                            <input type="text" id="field-age" placeholder="f.eks. 28 (eller 100)" class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-sm text-white focus:border-fest-pink outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-bold text-gray-300">Festival-alias</label>
+                        <input type="text" id="field-alias" placeholder="f.eks. 'Gubberock-Kongen' eller 'Camp-Dronninga'" class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-sm text-white focus:border-fest-pink outline-none">
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-bold text-gray-300">Hvordan kjenne deg igjen?</label>
+                        <input type="text" id="field-spot" placeholder="f.eks. Rose i knappehullet, rød lue, står ved miksepulten..." class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-sm text-white focus:border-fest-pink outline-none">
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-bold text-gray-300">Kjønn</label>
+                        <select id="field-gender" class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-sm text-white focus:border-fest-pink outline-none">
+                            <option value="Mann">Mann</option>
+                            <option value="Kvinne">Kvinne</option>
+                            <option value="Ikke-binær">Ikke-binær</option>
+                            <option value="Ikke vesentlig">Ikke vesentlig</option>
+                        </select>
+                    </div>
+
+                    <!-- Bilde / Tegning Selector -->
+                    <div class="space-y-2 pt-2">
+                        <label class="text-xs font-bold text-gray-300 block">Bilde / Portrett:</label>
+                        
+                        <div class="flex gap-2">
+                            <button type="button" onclick="switchAvatarTab('draw')" id="btn-tab-draw" class="flex-1 py-2 text-xs font-bold rounded-lg border border-fest-pink bg-fest-pink/20 text-white">
+                                <i class="fa-solid fa-paint-brush"></i> Tegn sjøl!
+                            </button>
+                            <button type="button" onclick="switchAvatarTab('upload')" id="btn-tab-upload" class="flex-1 py-2 text-xs font-bold rounded-lg border border-gray-700 bg-gray-900 text-gray-400">
+                                <i class="fa-solid fa-upload"></i> Last opp bilde
+                            </button>
+                        </div>
+
+                        <!-- Canvas Drawing Tool -->
+                        <div id="avatar-draw-container" class="bg-gray-900 p-3 rounded-2xl border border-gray-800 text-center space-y-2">
+                            <p class="text-[11px] text-gray-400">Tegn et kjapt festival-portrett med fingeren:</p>
+                            <canvas id="drawing-canvas" width="220" height="220" class="mx-auto bg-gray-950 border border-gray-700 rounded-xl touch-none cursor-crosshair"></canvas>
+                            
+                            <div class="flex items-center justify-center gap-2 pt-1">
+                                <button type="button" onclick="setCanvasColor('#ff2a85')" class="w-6 h-6 rounded-full bg-[#ff2a85] border border-white/20"></button>
+                                <button type="button" onclick="setCanvasColor('#ffcc00')" class="w-6 h-6 rounded-full bg-[#ffcc00] border border-white/20"></button>
+                                <button type="button" onclick="setCanvasColor('#00e5ff')" class="w-6 h-6 rounded-full bg-[#00e5ff] border border-white/20"></button>
+                                <button type="button" onclick="setCanvasColor('#22c55e')" class="w-6 h-6 rounded-full bg-[#22c55e] border border-white/20"></button>
+                                <button type="button" onclick="setCanvasColor('#ffffff')" class="w-6 h-6 rounded-full bg-white border border-white/20"></button>
+                                <button type="button" onclick="clearCanvas()" class="text-xs bg-gray-800 text-red-400 px-2 py-1 rounded-lg hover:bg-gray-700 ml-2">
+                                    <i class="fa-solid fa-trash"></i> Slett
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Upload File Input -->
+                        <div id="avatar-upload-container" class="hidden bg-gray-900 p-4 rounded-2xl border border-gray-800 text-center space-y-2">
+                            <input type="file" id="file-input" accept="image/*" onchange="handleFileUpload(event)" class="hidden">
+                            <button type="button" onclick="document.getElementById('file-input').click()" class="w-full py-3 bg-gray-800 border border-dashed border-gray-600 rounded-xl text-xs text-gray-300 hover:border-fest-pink">
+                                <i class="fa-solid fa-cloud-arrow-up text-lg text-fest-pink block mb-1"></i> Velg festivalbilde fra mobilen
+                            </button>
+                            <div id="upload-preview" class="hidden mx-auto w-24 h-24 rounded-xl overflow-hidden border border-fest-pink mt-2">
+                                <img id="preview-img" class="w-full h-full object-cover" alt="Preview">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2 pt-2">
+                        <button type="button" onclick="nextStep(1)" class="w-1/3 py-3 bg-gray-800 text-gray-300 font-bold rounded-xl text-sm">
+                            Tilbake
+                        </button>
+                        <button type="button" onclick="nextStep(3)" class="w-2/3 py-3 bg-fest-pink text-white font-bold rounded-xl text-sm shadow-md hover:bg-pink-600">
+                            Neste: Interesser <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: INTERESTS -->
+                <div id="wizard-step-3" class="wizard-step hidden space-y-4">
+                    <div class="border-b border-gray-800 pb-2">
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-record-vinyl text-fest-accent"></i> Interesser
+                        </h3>
+                        <p class="text-xs text-gray-400">Kategoriser nørdingen og smaken din.</p>
+                    </div>
+
+                    <!-- Musikk sjanger -->
+                    <div>
+                        <label class="text-xs font-bold text-gray-300">Musikkstil / Favorittsjanger:</label>
+                        <select id="genre-music" class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-sm text-white focus:border-fest-pink outline-none">
+                            <option value="Jazz dreper">Jazz dreper</option>
+                            <option value="HARDT!">HARDT!</option>
+                            <option value="Populærmusikk">Populærmusikk</option>
+                            <option value="Rap og/eller Jamaicabasert">Rap og/eller Jamaicabasert</option>
+                            <option value="Pling-plong">Pling-plong</option>
+                            <option value="(Gubbe)rock">(Gubbe)rock</option>
+                            <option value="Elektronisk ræl">Elektronisk ræl</option>
+                            <option value="Annet/alt">Annet/alt</option>
+                        </select>
+                    </div>
+
+                    <!-- Nerding -->
+                    <div>
+                        <label class="text-xs font-bold text-gray-300">Nerding:</label>
+                        <select id="genre-nerd" class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-sm text-white focus:border-fest-pink outline-none">
+                            <option value="Datagreier">Datagreier</option>
+                            <option value="Rollespill, fantasy og Sci-fi">Rollespill, fantasy og Sci-fi</option>
+                            <option value="MUSIKK!!!">MUSIKK!!!</option>
+                            <option value="Alt i Abels tårn -gata">Alt i Abels tårn -gata</option>
+                            <option value="Sminke, hår og klær">Sminke, hår og klær</option>
+                            <option value="Kjendiser">Kjendiser</option>
+                            <option value="Høykultur">Høykultur</option>
+                            <option value="Lavkultur">Lavkultur</option>
+                            <option value="Mat, vin, surdeig og fermentering">Mat, vin, surdeig og fermentering</option>
+                            <option value="Øl">Øl</option>
+                            <option value="Det annet (eller samme) kjønn">Det annet (eller samme) kjønn</option>
+                        </select>
+                    </div>
+
+                    <!-- Skrivefelter med subheader -->
+                    <div class="space-y-2.5 pt-3 border-t border-gray-800">
+                        <h4 class="text-xs font-bold text-fest-yellow uppercase tracking-wider flex items-center gap-1">
+                            <i class="fa-solid fa-sliders"></i> "Mer info i monitor, plis"
+                        </h4>
+                        
+                        <div>
+                            <input type="text" id="fav-book" placeholder="Favorittbok" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-xs text-white focus:border-fest-pink outline-none">
+                        </div>
+                        <div>
+                            <input type="text" id="fav-movie" placeholder="Favorittfilm" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-xs text-white focus:border-fest-pink outline-none">
+                        </div>
+                        <div>
+                            <input type="text" id="fav-band" placeholder="Favorittband" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-xs text-white focus:border-fest-pink outline-none">
+                        </div>
+                        <div>
+                            <input type="text" id="fav-equation" placeholder="Favorittligning (f.eks. E = mc²)" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-xs text-white focus:border-fest-pink outline-none">
+                        </div>
+                        <div>
+                            <input type="text" id="fav-passion" placeholder="Favorittlidenskap" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-xs text-white focus:border-fest-pink outline-none">
+                        </div>
+                        <div>
+                            <input type="text" id="fav-topic" placeholder="Drømmesamtaletema" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-xs text-white focus:border-fest-pink outline-none">
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2 pt-2">
+                        <button type="button" onclick="nextStep(2)" class="w-1/3 py-3 bg-gray-800 text-gray-300 font-bold rounded-xl text-sm">
+                            Tilbake
+                        </button>
+                        <button type="submit" class="w-2/3 py-3 bg-gradient-to-r from-fest-pink via-purple-600 to-fest-yellow text-white font-black rounded-xl text-sm shadow-xl hover:opacity-95">
+                            Lagre Profil &amp; Se Matches! 🎉
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- SECTION 2: MATCH VIEW -->
+        <section id="sec-match-view" class="hidden space-y-4">
+            
+            <!-- Header status for current match -->
+            <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                <span class="text-xs font-bold text-fest-yellow uppercase tracking-wider flex items-center gap-1">
+                    <i class="fa-solid fa-fire text-fest-pink"></i> Din neste match
+                </span>
+                <span id="match-badge" class="hidden text-[10px] font-bold bg-purple-900/60 text-purple-200 border border-purple-500 px-2 py-0.5 rounded-full">
+                    Musikkkompis 🎸
+                </span>
+            </div>
+
+            <!-- Single Match Card Container -->
+            <div id="single-match-card" class="bg-fest-card rounded-3xl p-5 border border-gray-800 fest-card-shadow space-y-4 relative">
+                <!-- Injected dynamically by JS -->
+            </div>
+
+            <!-- Action Buttons for Match -->
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button onclick="cycleTopic()" class="py-3.5 px-3 bg-gray-800 hover:bg-gray-700 text-fest-yellow font-bold text-xs rounded-2xl border border-gray-700 flex items-center justify-center gap-2 active:scale-95 transition">
+                    <i class="fa-solid fa-arrows-rotate"></i> Nytt samtaletema
+                </button>
+                <button id="btn-next-match" onclick="handleNextMatchClick()" class="py-3.5 px-3 bg-gradient-to-r from-fest-pink to-purple-600 text-white font-black text-xs rounded-2xl shadow-lg flex items-center justify-center gap-2 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span id="next-match-text">Ny match <i class="fa-solid fa-forward"></i></span>
+                </button>
+            </div>
+
+            <!-- Toast alert for Skål -->
+            <div id="skal-toast" class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-fest-yellow text-black font-extrabold px-5 py-3 rounded-2xl shadow-2xl border-2 border-white flex items-center gap-2 text-sm animate-bounce">
+                <span>🍻 Skål sendt til matchen din!</span>
+            </div>
+
+            <!-- No Matches Warning Modal State -->
+            <div id="no-matches-msg" class="hidden text-center py-8 space-y-3 bg-gray-900/60 p-4 rounded-2xl border border-gray-800">
+                <p class="text-sm font-bold text-gray-300">Du har nå sett alle tilgjengelige festivaldeltakere!</p>
+                <button onclick="resetMatchStack()" class="px-4 py-2 bg-fest-pink text-white text-xs font-bold rounded-xl">
+                    Start på nytt fra toppen 🔄
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-fest-dark/95 backdrop-blur-md border-t border-gray-800 py-3 px-8 flex justify-around items-center z-40">
+        <button onclick="showSection('match-view')" class="flex flex-col items-center gap-1 text-fest-pink" id="nav-match">
+            <i class="fa-solid fa-heart text-lg"></i>
+            <span class="text-[10px] font-bold">Match</span>
+        </button>
+        <button onclick="editProfile()" class="flex flex-col items-center gap-1 text-gray-400 hover:text-fest-pink" id="nav-profile">
+            <i class="fa-solid fa-user-pen text-lg"></i>
+            <span class="text-[10px] font-bold">Min profil</span>
+        </button>
+    </nav>
+
+    <!-- FIREBASE MODULE SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase-konfigurasjon for MerjemterudMatch
+        const firebaseConfig = typeof __firebase_config !== 'undefined' 
+            ? JSON.parse(__firebase_config) 
+            : {
+                apiKey: "AIzaSyDwea0qRLLq8oz-b4WISDNTGmKp2KuSBic",
+                authDomain: "merjemterudmatch.firebaseapp.com",
+                projectId: "merjemterudmatch",
+                storageBucket: "merjemterudmatch.firebasestorage.app",
+                messagingSenderId: "785596017281",
+                appId: "1:785596017281:web:8b761dcbd682414a9b3b80",
+                measurementId: "G-6S6HFY11N5"
+            };
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'merjemterudmatch';
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let currentMatchCandidate = null;
+        let candidateIndex = 0;
+        let drawColor = '#ff2a85';
+        let isDrawing = false;
+        let canvas, ctx;
+        let topicIndex = 0;
+        let matchTimerInterval = null;
+        let matchLockUntil = 0;
+        let festivalGoers = [];
+        let authUser = null;
+
+        async function initAuthAndData() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) {
+                console.warn("Auth initialization fallback to anonymous sign-in", err);
+                await signInAnonymously(auth);
+            }
+
+            onAuthStateChanged(auth, (user) => {
+                if (!user) return;
+                authUser = user;
+                
+                // Firestore paths compliance Rule 1
+                const profilesRef = collection(db, 'artifacts', appId, 'public', 'data', 'profiles');
+
+                // Real-time listener for profiles (Rule 2: simple collection query, error callback included)
+                onSnapshot(profilesRef, (snapshot) => {
+                    festivalGoers = [];
+                    snapshot.forEach((docSnap) => {
+                        festivalGoers.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+                    
+                    // Sjekk om vi har lagret brukerens profil fra før
+                    const myProfile = festivalGoers.find(p => p.id === user.uid);
+                    if (myProfile) {
+                        currentUser = myProfile;
+                        updateUserBadge();
+                    }
+                    
+                    if (!document.getElementById('sec-match-view').classList.contains('hidden')) {
+                        renderCurrentMatch();
+                    }
+                }, (error) => {
+                    console.error("Firestore error listening to profiles:", error);
+                });
+            });
+        }
+
+        window.showSection = function(sectionId) {
+            document.getElementById('sec-welcome').classList.add('hidden');
+            document.getElementById('sec-wizard').classList.add('hidden');
+            document.getElementById('sec-match-view').classList.add('hidden');
+
+            const target = document.getElementById(`sec-${sectionId}`);
+            if (target) target.classList.remove('hidden');
+
+            if (sectionId === 'match-view') {
+                renderCurrentMatch();
+            }
+        };
+
+        window.initCanvas = function() {
+            canvas = document.getElementById('drawing-canvas');
+            if (!canvas) return;
+            ctx = canvas.getContext('2d');
+            
+            ctx.fillStyle = '#08080a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseleave', stopDrawing);
+
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                isDrawing = true;
+                ctx.beginPath();
+                ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+            });
+
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (!isDrawing) return;
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                ctx.strokeStyle = drawColor;
+                ctx.lineWidth = 4;
+                ctx.lineCap = 'round';
+                ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+                ctx.stroke();
+            });
+
+            canvas.addEventListener('touchend', stopDrawing);
+        };
+
+        function startDrawing(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            ctx.strokeStyle = drawColor;
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+
+        function stopDrawing() { isDrawing = false; }
+
+        window.setCanvasColor = function(color) { drawColor = color; };
+        window.clearCanvas = function() {
+            ctx.fillStyle = '#08080a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        };
+
+        window.switchAvatarTab = function(tab) {
+            const drawContainer = document.getElementById('avatar-draw-container');
+            const uploadContainer = document.getElementById('avatar-upload-container');
+            const btnDraw = document.getElementById('btn-tab-draw');
+            const btnUpload = document.getElementById('btn-tab-upload');
+
+            if (tab === 'draw') {
+                drawContainer.classList.remove('hidden');
+                uploadContainer.classList.add('hidden');
+                btnDraw.className = "flex-1 py-2 text-xs font-bold rounded-lg border border-fest-pink bg-fest-pink/20 text-white";
+                btnUpload.className = "flex-1 py-2 text-xs font-bold rounded-lg border border-gray-700 bg-gray-900 text-gray-400";
+            } else {
+                drawContainer.classList.add('hidden');
+                uploadContainer.classList.remove('hidden');
+                btnUpload.className = "flex-1 py-2 text-xs font-bold rounded-lg border border-fest-pink bg-fest-pink/20 text-white";
+                btnDraw.className = "flex-1 py-2 text-xs font-bold rounded-lg border border-gray-700 bg-gray-900 text-gray-400";
+            }
+        };
+
+        window.handleFileUpload = function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const img = document.getElementById('preview-img');
+                    img.src = evt.target.result;
+                    document.getElementById('upload-preview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.startOnboarding = function() {
+            document.getElementById('sec-welcome').classList.add('hidden');
+            document.getElementById('sec-wizard').classList.remove('hidden');
+            window.nextStep(1);
+        };
+
+        window.nextStep = function(step) {
+            document.querySelectorAll('.wizard-step').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`wizard-step-${step}`).classList.remove('hidden');
+            
+            document.getElementById('step-indicator').textContent = `Steg ${step} av 3`;
+            const dots = document.querySelectorAll('.step-dot');
+            dots.forEach((dot, idx) => {
+                if (idx < step) {
+                    dot.classList.add('bg-fest-pink');
+                    dot.classList.remove('bg-gray-700');
+                } else {
+                    dot.classList.add('bg-gray-700');
+                    dot.classList.remove('bg-fest-pink');
+                }
+            });
+        };
+
+        window.handleWizardSubmit = async function(e) {
+            e.preventDefault();
+            if (!authUser) return;
+
+            let avatarData = '';
+            const isUploadVisible = !document.getElementById('avatar-upload-container').classList.contains('hidden');
+            const uploadedImg = document.getElementById('preview-img').src;
+
+            if (isUploadVisible && uploadedImg) {
+                avatarData = uploadedImg;
+            } else if (canvas) {
+                avatarData = canvas.toDataURL();
+            }
+
+            currentUser = {
+                id: authUser.uid,
+                name: document.getElementById('field-name').value || 'Anonym Festdeltaker',
+                age: document.getElementById('field-age').value || 'Ukjent',
+                alias: document.getElementById('field-alias').value || 'Festivalist',
+                howToSpot: document.getElementById('field-spot').value || '',
+                gender: document.getElementById('field-gender').value,
+                avatar: avatarData,
+                romantic: document.getElementById('pref-romantic').value,
+                musicPref: document.getElementById('pref-music').value,
+                socialPref: document.getElementById('pref-social').value,
+                musicGenre: document.getElementById('genre-music').value,
+                nerdGenre: document.getElementById('genre-nerd').value,
+                favBook: document.getElementById('fav-book').value || '',
+                favMovie: document.getElementById('fav-movie').value || '',
+                favBand: document.getElementById('fav-band').value || '',
+                favEquation: document.getElementById('fav-equation').value || '',
+                favPassion: document.getElementById('fav-passion').value || '',
+                favTopic: document.getElementById('fav-topic').value || ''
+            };
+
+            // Lagre direkte i Firestore Database (Rule 1 compliance)
+            try {
+                const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'profiles', authUser.uid);
+                await setDoc(userDocRef, currentUser);
+            } catch (err) {
+                console.error("Feil ved lagring av profil til databasen:", err);
+            }
+
+            updateUserBadge();
+            candidateIndex = 0;
+            window.showSection('match-view');
+        };
+
+        function updateUserBadge() {
+            if (!currentUser) return;
+            document.getElementById('header-avatar').src = currentUser.avatar;
+            document.getElementById('header-alias').textContent = currentUser.alias || currentUser.name;
+            document.getElementById('user-badge').classList.remove('hidden');
+        }
+
+        window.editProfile = function() {
+            window.showSection('wizard');
+            if (currentUser) {
+                document.getElementById('field-name').value = currentUser.name || '';
+                document.getElementById('field-age').value = currentUser.age || '';
+                document.getElementById('field-alias').value = currentUser.alias || '';
+                document.getElementById('field-spot').value = currentUser.howToSpot || '';
+                document.getElementById('field-gender').value = currentUser.gender || 'Mann';
+                document.getElementById('pref-romantic').value = currentUser.romantic || 'Ikke aktuelt nå. Sorry.';
+                document.getElementById('pref-music').value = currentUser.musicPref || 'Noen å henge på konsert med';
+                document.getElementById('pref-social').value = currentUser.socialPref || 'Random prat med random person';
+                document.getElementById('genre-music').value = currentUser.musicGenre || 'Annet/alt';
+                document.getElementById('genre-nerd').value = currentUser.nerdGenre || 'Datagreier';
+                document.getElementById('fav-book').value = currentUser.favBook || '';
+                document.getElementById('fav-movie').value = currentUser.favMovie || '';
+                document.getElementById('fav-band').value = currentUser.favBand || '';
+                document.getElementById('fav-equation').value = currentUser.favEquation || '';
+                document.getElementById('fav-passion').value = currentUser.favPassion || '';
+                document.getElementById('fav-topic').value = currentUser.favTopic || '';
+            }
+            window.nextStep(1);
+        };
+
+        function getSortedMatches() {
+            if (!currentUser) return festivalGoers;
+
+            let candidates = festivalGoers.filter(p => p.id !== currentUser.id);
+
+            const wantsBand = currentUser.musicPref === "Noen å (kanskje) spille i band med";
+            const isRandomSocial = currentUser.socialPref === "Random prat med random person";
+
+            const isGenderMatch = (candidateGender, pref) => {
+                if (pref === 'Ikke aktuelt nå. Sorry.' || pref === 'Spiller ingen rolle') return true;
+                if (pref === 'Mann') return ['Mann', 'Ikke-binær', 'Ikke vesentlig'].includes(candidateGender);
+                if (pref === 'Kvinne') return ['Kvinne', 'Ikke-binær', 'Ikke vesentlig'].includes(candidateGender);
+                return true;
+            };
+
+            candidates.sort((a, b) => {
+                let scoreA = 0;
+                let scoreB = 0;
+
+                if (wantsBand) {
+                    if (a.musicPref === "Noen å (kanskje) spille i band med") scoreA += 100;
+                    if (b.musicPref === "Noen å (kanskje) spille i band med") scoreB += 100;
+                }
+
+                if (!isRandomSocial && currentUser.romantic !== 'Ikke aktuelt nå. Sorry.') {
+                    if (isGenderMatch(a.gender, currentUser.romantic)) scoreA += 40;
+                    if (isGenderMatch(b.gender, currentUser.romantic)) scoreB += 40;
+                }
+
+                if (a.musicGenre === currentUser.musicGenre) scoreA += 10;
+                if (b.musicGenre === currentUser.musicGenre) scoreB += 10;
+                if (a.nerdGenre === currentUser.nerdGenre) scoreA += 10;
+                if (b.nerdGenre === currentUser.nerdGenre) scoreB += 10;
+
+                return scoreB - scoreA;
+            });
+
+            if (isRandomSocial && !wantsBand) {
+                candidates = candidates.sort(() => 0.5 - Math.random());
+            }
+
+            return candidates;
+        }
+
+        function renderCurrentMatch() {
+            const container = document.getElementById('single-match-card');
+            const badge = document.getElementById('match-badge');
+            const noMatches = document.getElementById('no-matches-msg');
+            const candidates = getSortedMatches();
+
+            if (candidateIndex >= candidates.length) {
+                container.classList.add('hidden');
+                badge.classList.add('hidden');
+                noMatches.classList.remove('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+            noMatches.classList.add('hidden');
+
+            const match = candidates[candidateIndex];
+            currentMatchCandidate = match;
+
+            const isPureMusicMatch = (currentUser && currentUser.musicPref === "Noen å (kanskje) spille i band med" && match.musicPref === "Noen å (kanskje) spille i band med");
+
+            if (isPureMusicMatch) {
+                badge.textContent = "Musikkkompis 🎸";
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            const matchDisplayName = match.alias || match.name;
+            const topic = generateMatchTopic(match, topicIndex);
+
+            container.innerHTML = `
+                <div class="flex items-start gap-4 border-b border-gray-800 pb-4">
+                    <img src="${match.avatar}" class="w-20 h-20 rounded-2xl object-cover bg-gray-900 border-2 border-fest-pink flex-shrink-0" alt="${match.name}">
+                    <div>
+                        <h3 class="text-2xl font-black text-white leading-tight">${match.name}, ${match.age}</h3>
+                        <p class="text-xs font-bold text-fest-yellow mt-0.5">"${match.alias || 'Festivalist'}"</p>
+                        ${match.howToSpot ? `<p class="text-[11px] font-semibold text-fest-accent mt-1 flex items-center gap-1"><i class="fa-solid fa-eye text-[10px]"></i> Kjennetegn: ${match.howToSpot}</p>` : ''}
+                        <div class="flex flex-wrap gap-1 mt-2 text-[10px]">
+                            <span class="bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">🎵 ${match.musicGenre}</span>
+                            <span class="bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">🤓 ${match.nerdGenre}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-purple-950/70 via-gray-900 to-fest-pink/20 p-4 rounded-2xl border border-fest-pink/50 space-y-1.5">
+                    <span class="text-xs font-black uppercase text-fest-yellow flex items-center gap-1.5 tracking-wide">
+                        <i class="fa-solid fa-comment-dots text-fest-pink"></i> Du skal spørre ${matchDisplayName} om...
+                    </span>
+                    <p class="text-sm font-semibold text-white italic leading-relaxed pt-1">
+                        ${topic}
+                    </p>
+                </div>
+
+                <button onclick="sendSkal('${match.id}', '${matchDisplayName}')" class="w-full py-3 bg-gradient-to-r from-amber-500 via-fest-yellow to-amber-400 text-gray-950 font-black rounded-2xl shadow-lg hover:brightness-110 active:scale-95 transition flex items-center justify-center gap-2 text-xs uppercase tracking-wider">
+                    <i class="fa-solid fa-beer-mug-empty text-base"></i> Send en skål til ${matchDisplayName}! 🍻
+                </button>
+
+                <div class="bg-gray-900/80 rounded-2xl p-3 text-xs space-y-2 border border-gray-800 text-gray-300">
+                    ${match.favBand ? `<div><span class="text-gray-500 block text-[10px]">Favorittband:</span> <span class="font-bold text-fest-pink">${match.favBand}</span></div>` : ''}
+                    ${match.favEquation ? `<div><span class="text-gray-500 block text-[10px]">Favorittligning:</span> <span class="font-mono text-fest-yellow bg-black/50 px-1.5 py-0.5 rounded text-[11px] inline-block mt-0.5">${match.favEquation}</span></div>` : ''}
+                    ${match.favBook ? `<div><span class="text-gray-500 block text-[10px]">Favorittbok:</span> <span class="italic text-gray-200">${match.favBook}</span></div>` : ''}
+                    ${match.favPassion ? `<div><span class="text-gray-500 block text-[10px]">Favorittlidenskap:</span> <span class="text-gray-200 font-semibold">${match.favPassion}</span></div>` : ''}
+                    ${match.favTopic ? `<div><span class="text-gray-500 block text-[10px]">Drømmesamtaletema:</span> <span class="text-gray-200">${match.favTopic}</span></div>` : ''}
+                </div>
+            `;
+
+            updateMatchButtonState();
+        }
+
+        function generateMatchTopic(match, index) {
+            const wildFreeQuestions = [
+                `«Hvis du måtte tilbringe et helt år på en øde øy med enten en kverulerende trekkspiller eller en taus mimekunstner, hvem velger du?»`,
+                `«Hvilken romvesen-rase mistenker du hemmelig at styrer miksebordet på Hovedscenen i kveld?»`,
+                `«Hvis du våknet i morgen og oppdaget at du kunne snakke flytende med enten gresshopper eller ekorn, hva spør du dem om først?»`,
+                `«Ville du heller hatt tiere som føtter eller bananer som fingre resten av festivalen?»`,
+                `«Hvis du kunne bytte ut nasjonalsangen med en valfri låt fra 90-tallet, hvilken låt rykker rett til topps?»`,
+                `«Tror du dinosaurer egentlig hadde fargerike fjørdrakter og fremførte intrikate rocke-operaer før meteoritten kom?»`,
+                `«Hva ville du kalt en kaffebar som kun var bemannet av gretne katter i skinnjakker?»`,
+                `«Hvis du måtte leve resten av livet i en kontinuerlig tidsløkke på et nasj fra 2007, hva ville du pakket i sekken?»`
+            ];
+
+            if (currentUser && currentUser.socialPref === "Random prat med random person") {
+                return wildFreeQuestions[index % wildFreeQuestions.length];
+            }
+
+            if (index > 0) {
+                return wildFreeQuestions[(index - 1) % wildFreeQuestions.length];
+            }
+
+            const isBandMatch = (currentUser && currentUser.musicPref === "Noen å (kanskje) spille i band med") || 
+                                (match && match.musicPref === "Noen å (kanskje) spille i band med");
+
+            if (isBandMatch) {
+                return `«Hva foretrekker du egentlig på scenen: 5/4 eller 7/4-takt når det virkelig skal gjelde?»`;
+            }
+
+            const isMusicNerdUser = currentUser && currentUser.musicPref === "Noen å nørde om musikk med" && currentUser.nerdGenre === "MUSIKK!!!";
+            const isMusicNerdCandidate = match && match.musicPref === "Noen å nørde om musikk med" && match.nerdGenre === "MUSIKK!!!";
+            if (isMusicNerdUser && isMusicNerdCandidate) {
+                const band = match.favBand || "favorittbandet ditt";
+                return `«Hva er den absolutt mest obskure B-siden eller japanske bonuslåten til ${band} som vanlige dødelige ikke har hørt?»`;
+            }
+
+            if (match.favEquation) return `«Hvorfor i alle dager er "${match.favEquation}" den absolutt råeste ligningen i universet?»`;
+            if (match.favBand) return `«Hva er det som gjør at "${match.favBand}" rager høyest på din personlige adelskalender?»`;
+            if (match.favPassion) return `«Hvorfor brenner du så sykt for ${match.favPassion}?»`;
+            if (match.favBook) return `«Hva var det med boka "${match.favBook}" som forandret synet ditt på verden?»`;
+            if (match.favTopic) return `«Kan du gi meg en 3-minutters lyninnføring i drømmesamtaletemaet ditt: "${match.favTopic}"?»`;
+
+            return `«Hva var det mest usannsynlige sammentreffet som brakte deg til festivalen i år?»`;
+        }
+
+        window.sendSkal = function(matchId, name) {
+            const toast = document.getElementById('skal-toast');
+            if (toast) {
+                toast.innerHTML = `<span>🍻 Skål sendt til ${name}! Skål!</span>`;
+                toast.classList.remove('hidden');
+                setTimeout(() => { toast.classList.add('hidden'); }, 3000);
+            }
+        };
+
+        window.cycleTopic = function() {
+            topicIndex++;
+            renderCurrentMatch();
+        };
+
+        window.handleNextMatchClick = function() {
+            const now = Date.now();
+            if (now < matchLockUntil) return;
+
+            matchLockUntil = now + (5 * 60 * 1000);
+            candidateIndex++;
+            topicIndex = 0;
+            renderCurrentMatch();
+        };
+
+        window.resetMatchStack = function() {
+            candidateIndex = 0;
+            topicIndex = 0;
+            renderCurrentMatch();
+        };
+
+        function updateMatchButtonState() {
+            const btn = document.getElementById('btn-next-match');
+            const btnText = document.getElementById('next-match-text');
+            if (!btn || !btnText) return;
+
+            if (matchTimerInterval) clearInterval(matchTimerInterval);
+
+            matchTimerInterval = setInterval(() => {
+                const now = Date.now();
+                const diff = matchLockUntil - now;
+
+                if (diff <= 0) {
+                    clearInterval(matchTimerInterval);
+                    btn.disabled = false;
+                    btnText.innerHTML = `Ny match <i class="fa-solid fa-forward"></i>`;
+                } else {
+                    btn.disabled = true;
+                    const mins = Math.floor(diff / 60000);
+                    const secs = Math.floor((diff % 60000) / 1000);
+                    const pad = (n) => n < 10 ? '0' + n : n;
+                    btnText.innerHTML = `Ny match (${pad(mins)}:${pad(secs)})`;
+                }
+            }, 500);
+        }
+
+        window.onload = function() {
+            window.initCanvas();
+            initAuthAndData();
+        };
+    </script>
+
+</body></html>

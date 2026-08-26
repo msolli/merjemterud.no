@@ -1,5 +1,6 @@
 (ns merjemterud.main
-  (:require [clojure.string :as str]
+  (:require [clojure.java.io :as io]
+            [clojure.string :as str]
             [merjemterud.program :as program]
             [powerpack.markdown :as md]))
 
@@ -19,7 +20,8 @@
 (def nav-items
   [["/" "Festivalen"]
    ["/program.html" "Program"]
-   ["/praktisk.html" "Praktisk"]])
+   ["/praktisk.html" "Praktisk"]
+   ["/match.html" "Match"]])
 
 (defn site-nav
   [page]
@@ -205,6 +207,14 @@
             (chip-strip "Andre aktiviteter" (:program/andre page))]]
           (cta-band page)))
 
+;; ── Match page ─────────────────────────────────────────────
+
+(defn match-page
+  "A self-contained HTML document with its own head, styling and scripts.
+   Served verbatim — a string body skips Powerpack's hiccup rendering."
+  [_page]
+  (slurp (io/resource "match.html")))
+
 ;; ── Praktisk page ──────────────────────────────────────────
 
 (defn praktisk-page
@@ -225,6 +235,7 @@
   (case (:page/uri page)
     "/program.html" (program-page page)
     "/praktisk.html" (praktisk-page page)
+    "/match.html" (match-page page)
     (landing page)))
 
 (def config
