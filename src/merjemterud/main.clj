@@ -211,9 +211,14 @@
 
 (defn match-page
   "A self-contained HTML document with its own head, styling and scripts.
-   Served verbatim — a string body skips Powerpack's hiccup rendering."
+   Served verbatim — a string body skips Powerpack's hiccup rendering.
+
+   Powerpack resolves every img[src] as an asset and chokes on inline data:
+   URIs. Those placeholders only keep the browser from drawing a broken image
+   before the JS fills them in, so strip them on the way out."
   [_page]
-  (slurp (io/resource "match.html")))
+  (-> (slurp (io/resource "match.html"))
+      (str/replace #"\s+src=\"data:[^\"]*\"" "")))
 
 ;; ── Praktisk page ──────────────────────────────────────────
 
