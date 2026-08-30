@@ -18,6 +18,9 @@
             && request.resource.data.avatar is string
             && request.resource.data.avatar.size() <= 150000;
         }
+        match /artifacts/{appId}/public/data/skals/{skalId} {
+          allow read, write: if request.auth != null;
+        }
       }
     }
     ======================================================================
@@ -104,19 +107,26 @@
                 </div>
             </div>
         </button>
-        <div id="user-badge" class="hidden flex items-center gap-2 bg-gray-900/90 px-3 py-1.5 rounded-full border border-gray-700">
-            <img id="header-avatar" class="w-6 h-6 rounded-full object-cover bg-gray-800" alt="Profil">
-            <span id="header-alias" class="text-xs font-semibold text-gray-200 truncate max-w-[80px]"></span>
-            <button type="button" onclick="editProfile()" class="text-xs text-fest-pink hover:text-white ml-1 p-1" title="Rediger profil" aria-label="Rediger profil">
-                <i class="fa-solid fa-pen"></i>
+        <div class="flex items-center gap-2">
+            <!-- Skål-knapp for mottatte skåler -->
+            <button type="button" onclick="showSkalModal()" id="btn-skal-badge" class="hidden flex items-center gap-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-fest-yellow px-2.5 py-1.5 rounded-full border border-amber-500/40 text-xs font-extrabold transition active:scale-95" title="Mottatte skåler">
+                <i class="fa-solid fa-beer-mug-empty text-amber-400"></i>
+                <span id="skal-count">0</span>
             </button>
+            <div id="user-badge" class="hidden flex items-center gap-2 bg-gray-900/90 px-3 py-1.5 rounded-full border border-gray-700">
+                <img id="header-avatar" class="w-6 h-6 rounded-full object-cover bg-gray-800" alt="Profil">
+                <span id="header-alias" class="text-xs font-semibold text-gray-200 truncate max-w-[80px]"></span>
+                <button type="button" onclick="editProfile()" class="text-xs text-fest-pink hover:text-white ml-1 p-1" title="Rediger profil" aria-label="Rediger profil">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
+            </div>
         </div>
     </header>
 
     <main class="flex-1 p-4 pb-24 overflow-y-auto">
 
-        <section id="sec-welcome" class="space-y-6 text-center py-6">
-            <div class="relative inline-block my-2">
+        <section id="sec-welcome" class="space-y-5 text-center py-4">
+            <div class="relative inline-block my-1">
                 <div class="flex flex-col items-center gap-2 p-4 bg-gray-950/80 rounded-3xl border border-gray-800/80 shadow-2xl">
                     <div class="flex gap-2">
                         <span class="sticker-box -rotate-3 text-lg md:text-xl px-3 py-1">ENDA MER</span>
@@ -132,7 +142,7 @@
                 </div>
             </div>
 
-            <div class="space-y-2">
+            <div class="space-y-1.5">
                 <h2 class="text-3xl font-extrabold text-white tracking-tight">Velkommen til <span class="fest-gradient-text">Merjemterud Match</span></h2>
                 <p class="text-xs text-gray-400 max-w-xs mx-auto leading-relaxed">
                     Enda mer Jemterud i monitor plis! Finn en konsertkompis, noen å spille i band med, en sjelevenn til djupe samtaler – eller ditt neste festivalblikk.
@@ -143,22 +153,71 @@
             </div>
 
             <div id="auth-status-container" class="hidden text-xs p-3 bg-red-900/50 border border-red-700 text-red-200 rounded-xl">
-                Tilkobling til server feilet. Vennligst sjekk internettforbindelsen din og prøv igjen.
+                Tilkobling til server feilet. Vennligst sjekk internettforbindelsen din og at anonym innlogging er aktivert i Firebase.
             </div>
 
-            <div class="bg-gray-900/90 p-4 rounded-2xl border border-gray-800 text-left text-xs text-gray-300 space-y-2">
-                <div class="flex items-center gap-2 font-bold text-fest-yellow">
-                    <i class="fa-solid fa-sparkles"></i> Slik funker det:
-                </div>
-                <p>1. Velg hva du er ute etter på festivalen.</p>
-                <p>2. Fyll ut profilen din og tegn eller last opp bilde.</p>
-                <p>3. Få opp én treffsikker match om gangen med samtalestartere!</p>
-            </div>
+            <div class="space-y-2 pt-2">
+                <button type="button" id="btn-start-onboarding" onclick="startOnboarding()" class="w-full py-3.5 bg-gradient-to-r from-fest-pink via-purple-600 to-fest-accent text-white font-bold rounded-2xl shadow-lg hover:opacity-95 active:scale-95 transition-all text-base flex items-center justify-center gap-2">
+                    Lag Profil &amp; Start Matching <i class="fa-solid fa-arrow-right"></i>
+                </button>
 
-            <button type="button" id="btn-start-onboarding" onclick="startOnboarding()" class="w-full py-4 bg-gradient-to-r from-fest-pink via-purple-600 to-fest-accent text-white font-bold rounded-2xl shadow-lg hover:opacity-95 active:scale-95 transition-all text-lg flex items-center justify-center gap-2">
-                 Lag Profil &amp; Start Matching <i class="fa-solid fa-arrow-right"></i>
-            </button>
+                <button type="button" onclick="showClaimModal()" class="w-full py-3 bg-gray-900 hover:bg-gray-800 text-fest-yellow font-bold rounded-2xl border border-gray-700 text-xs flex items-center justify-center gap-2 active:scale-95 transition">
+                    <i class="fa-solid fa-key"></i> Har du allerede laga profil? Hent den her!
+                </button>
+            </div>
         </section>
+
+        <!-- MODAL: Hent profil -->
+        <div id="claim-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-gray-900 border border-gray-700 rounded-3xl p-5 max-w-xs w-full space-y-4 text-left shadow-2xl">
+                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-user-check text-fest-pink"></i> Hent profilen din
+                    </h3>
+                    <button type="button" onclick="hideClaimModal()" class="text-gray-400 hover:text-white p-1">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+                <p class="text-xs text-gray-300">
+                    Skriv inn <strong>Festival-aliaset</strong> eller <strong>navnet</strong> du fylte ut tidligere for å koble profilen til denne telefonen:
+                </p>
+                <div>
+                    <label for="claim-input" class="sr-only">Alias eller navn</label>
+                    <input type="text" id="claim-input" placeholder="f.eks. Ola eller Camp-Dronninga" class="w-full bg-gray-950 border border-gray-700 rounded-xl p-3 text-sm text-white focus:border-fest-pink outline-none">
+                </div>
+                <div id="claim-error" class="hidden text-xs text-red-400 font-semibold"></div>
+                
+                <div class="flex gap-2">
+                    <button type="button" onclick="hideClaimModal()" class="w-1/3 py-2.5 bg-gray-800 text-gray-300 font-bold rounded-xl text-xs">
+                        Avbryt
+                    </button>
+                    <button type="button" onclick="handleClaimProfile()" id="btn-do-claim" class="w-2/3 py-2.5 bg-fest-pink text-white font-bold rounded-xl text-xs shadow-md hover:bg-pink-600">
+                        Hent profil <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: Mottatte skåler -->
+        <div id="skal-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-gray-900 border border-gray-700 rounded-3xl p-5 max-w-xs w-full space-y-4 text-left shadow-2xl max-h-[80vh] flex flex-col">
+                <div class="flex justify-between items-center border-b border-gray-800 pb-2 flex-shrink-0">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-beer-mug-empty text-fest-yellow"></i> Mottatte skåler 🍻
+                    </h3>
+                    <button type="button" onclick="hideSkalModal()" class="text-gray-400 hover:text-white p-1">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+                <p class="text-xs text-gray-400">Disse festivaldeltakerne har sendt deg en skål i mengden:</p>
+                <div id="skal-list" class="flex-1 overflow-y-auto space-y-2.5 pr-1">
+                    <!-- Fylles dynamisk -->
+                </div>
+                <button type="button" onclick="hideSkalModal()" class="w-full py-2.5 bg-gray-800 text-gray-200 font-bold rounded-xl text-xs">
+                    Lukk
+                </button>
+            </div>
+        </div>
 
         <section id="sec-wizard" class="hidden space-y-6">
             <div class="flex items-center justify-between px-2 text-xs font-semibold text-gray-400">
@@ -247,7 +306,10 @@
                     </div>
 
                     <div>
-                        <label for="field-alias" class="text-xs font-bold text-gray-300 block">Festival-alias</label>
+                        <label for="field-alias" class="text-xs font-bold text-gray-300 block">
+                            Festival-alias
+                            <span class="text-fest-yellow text-[11px] font-semibold block mt-0.5">OBS: dette blir ditt innloggingsnavn. Husk det!</span>
+                        </label>
                         <input type="text" id="field-alias" placeholder="f.eks. 'Gubberock-Kongen' eller 'Camp-Dronninga'" maxlength="60" class="w-full mt-1 bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-sm text-white focus:border-fest-pink outline-none">
                     </div>
 
@@ -268,7 +330,10 @@
 
                     <!-- Avatar Selector -->
                     <div class="space-y-2 pt-2">
-                        <label class="text-xs font-bold text-gray-300 block">Bilde / Portrett:</label>
+                        <label class="text-xs font-bold text-gray-300 block">
+                            Bilde / Portrett:
+                            <span class="text-fest-yellow text-[11px] font-semibold block mt-0.5">(Moro å tegne, men MYE lettere å finne deg hvis du laster opp en sjølfi)</span>
+                        </label>
                         
                         <div class="flex gap-2">
                             <button type="button" onclick="switchAvatarTab('draw')" id="btn-tab-draw" class="flex-1 py-2 text-xs font-bold rounded-lg border border-fest-pink bg-fest-pink/20 text-white">
@@ -441,7 +506,6 @@
 
     </main>
 
-    <!-- Navigation Bar -->
     <nav id="bottom-nav" class="hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-fest-dark/95 backdrop-blur-md border-t border-gray-800 py-3 px-8 justify-around items-center z-40">
         <button type="button" onclick="showSection('match-view')" class="flex flex-col items-center gap-1 text-fest-pink" id="nav-match">
             <i class="fa-solid fa-heart text-lg"></i>
@@ -456,9 +520,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, collection, onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // HTML escaping helper to prevent XSS
         function escapeHTML(str) {
             if (!str) return '';
             return String(str)
@@ -500,6 +563,135 @@
         let sortedCandidates = [];
         let authUser = null;
         let uploadedImageBase64 = '';
+        let receivedSkals = [];
+
+        const dbCorny = [
+            "Hvis du måtte tilbringe et år på en øde øy med en kverulerende trekkspiller eller en taus mimekunstner, hvem velger du?",
+            "Hvilken romvesen-rase mistenker du hemmelig at styrer miksebordet på Hovedscenen i kveld?",
+            "Hvis du våknet i morgen og oppdaget at du kunne snakke flytende med enten gresshopper eller ekorn, hva spør du dem om først?",
+            "Ville du heller hatt tiere som føtter eller bananer som fingre resten av festivalen?",
+            "Hvis du kunne bytte ut nasjonalsangen med en valfri låt fra 90-tallet, hvilken rykker rett til topps?",
+            "Tror du dinosaurer egentlig hadde fargerike fjørdrakter og fremførte rocke-operaer før meteoritten kom?",
+            "Hva ville du kalt en kaffebar som kun var bemannet av gretne katter i skinnjakker?",
+            "Hvis du måtte leve resten av livet i en tidsløkke på et nasj fra 2007, hva ville du pakket i sekken?",
+            "Er et pølsebrød egentlig en form for taco, og hvis ikke, hvorfor?",
+            "Hvilken lukt minner deg mest om barndommen din, og kan den tappes på boks?",
+            "Hvis du måtte bytte ut armene dine med hageredskaper, hvilke to velger du?",
+            "Om du var en hemmelig agent på denne festivalen, hva ville dekknavnet og oppdraget ditt vært?",
+            "Ville du helst hatt en bitteliten drage som spyr ild på mygg, eller en gigantisk marihøne du kunne ri på?",
+            "Hvilken konspirasjonsteori tror du egentlig littegrann på, hvis du er helt ærlig?",
+            "Hvis livet ditt var en musikalsk sjanger, hvilke instrumenter ville dominert soundtracket?",
+            "Hva er det mest absurde du har googlet i løpet av de siste 48 timene?",
+            "Om du kunne trylle frem én matrett akkurat nå med et knips, hva materialiserer seg foran deg?",
+            "Ville du helst hatt evnen til å gjøre deg usynlig, men kun når du synger høyt, eller kunne fly, men bare i gangfart?",
+            "Hvilket ord uttaler du annerledes i hodet ditt enn høyt?",
+            "Om skyene var laget av sukkerspinn, hvilken smak håper du de grå regnskyene har?",
+            "Hvis du var en NPC i et videospill, hva ville replikken din vært hver gang noen klikket på deg?",
+            "Hvis dyr plutselig begynte å snakke med aksent, hvilken aksent ville grevlingen hatt?",
+            "Hva er den dummeste måten du noensinne har pådratt deg et blåmerke på?",
+            "Hvis du måtte spise all maten din gjennom et sugerør resten av uka, hva mikser du først i blenderen?"
+        ];
+
+        const dbSerious = [
+            "Når følte du deg sist genuint stolt av deg selv?",
+            "Hva er den viktigste lærdommen du har tatt med deg fra det siste året?",
+            "Hvilken relasjon i livet ditt har formet deg mest til den du er i dag?",
+            "Hvis du kunne reise tilbake 10 år i tid og gi deg selv ett eneste råd, hva ville det vært?",
+            "Når kjenner du deg mest som deg selv?",
+            "Hva er du mest takknemlig for at noen lærte deg under oppveksten?",
+            "Hvilken frykt har du klart å overvinne som voksen?",
+            "Hva er det vakreste stedet du noensinne har vært, og hvorfor traff det deg så sterkt?",
+            "Er det noe du drømmer om å gjøre, men som du fortsatt ikke har tatt sjansen på?",
+            "Hvordan håndterer du tvil eller usikkerhet når du står overfor et stort valg?",
+            "Hva gir deg aller mest energi og påfyll i hverdagen?",
+            "Er det en bok, film eller sang som totalt endret måten du ser verden på?",
+            "Hva definerer et ekte og godt vennskap for deg?",
+            "Hvilken egenskap hos deg selv setter du aller mest pris på?",
+            "Når gråt du sist av glede, og hva var anledningen?",
+            "Hva er det modigste du noen gang har gjort?",
+            "Hvis du visste at du ikke kunne feile, hva ville du prøvd på i morgen?",
+            "Hvordan ønsker du å bli husket av de som står deg nærmest?",
+            "Hva er den snilleste tingen en fremmed har gjort for deg?",
+            "Når føler du deg mest i flytsonen og glemmer tid og sted?",
+            "Hva er en liten ting i hverdagen som alltid klarer å få deg i godt humør?",
+            "Hva er du mest nysgjerrig på å lære mer om i årene som kommer?"
+        ];
+
+        const dbPhil = [
+            "Finnes fri vilje, eller er vi alle bare et resultat av en uendelig kjede med årsak og virkning?",
+            "Tror du at matematikk ble oppfunnet av mennesket, eller oppdaget ute i universet?",
+            "Hvis du kunne laste opp bevisstheten din i en datamaskin for å leve evig, ville du gjort det?",
+            "Er det mulig å tenke en helt original tanke, eller er alt bare resirkulering av inntrykk?",
+            "Hva betyr det egentlig 'å være til'? Er vi bare summen av minnene våre?",
+            "Hvis man bytter ut hver eneste planke i en trebåt over 10 år, er det fortsatt den samme båten?",
+            "Tror du universet har en iboende mening, eller skaper vi vår egen mening i et likegyldig kosmos?",
+            "Kan en maskin noensinne oppleve ekte følelser, eller vil den bare simulere dem perfekt?",
+            "Er moral objektivt sann, eller er det bare sosiale spilleregler vi har blitt enige om for å overleve?",
+            "Er det mulig for mennesker å forstå uendelighet, eller lurer vi bare oss selv til å tro det?",
+            "Hvis du visste at vi lever i en simulering, ville det endret hvordan du levde livet ditt?",
+            "Er smerte en nødvendig forutsetning for å kunne oppleve ekte glede?",
+            "Hva er tid? Er fortid, nåtid og fremtid bare en illusjon skapt av sansene våre?",
+            "Har dyr en bevissthet som ligner vår, og hvordan burde det påvirke hvordan vi behandler dem?",
+            "Kan sannhet eksistere uavhengig av om det finnes et sinn til å observere den?",
+            "Er universet endelig eller uendelig, og hvilket av alternativene er mest svimlende?",
+            "Er lykke det ultimate målet i livet, eller er det noe som er viktigere?",
+            "Blir vi formet mest av genene våre eller av tilfeldighetene vi møter på veien?",
+            "Hvis man fjerner alt av språk, hvordan ville tankene våre egentlig sett ut?",
+            "Er det noen forskjell på hvem du er og hvem du tror du er?",
+            "Hvis et tre faller i skogen og ingen er der for å høre det, lager det da en lyd?"
+        ];
+
+        const dbPolitics = [
+            "Er demokratiet i sin nåværende form utdatert, og hvordan ville du eventuelt oppgradert det?",
+            "Bør det være en maksalder, og ikke bare minstealder, for å kunne stemme ved politiske valg?",
+            "Er universell borgerlønn den eneste levedyktige løsningen for fremtidens arbeidsmarked i møte med AI?",
+            "Hva mener du er den absolutt største utfordringen for menneskeheten de neste 50 årene?",
+            "Bør internettilgang anerkjennes som en grunnleggende menneskerettighet på lik linje med vann og strøm?",
+            "Tror du nasjonalstater vil eksistere om 200 år, eller går vi mot et mer globalt samfunn?",
+            "Er det etisk forsvarlig å bli mangemilliardær i en verden med stor fattigdom?",
+            "Hvor langt bør staten få gå i å overvåke borgere i bytte mot trygghet og sikkerhet?",
+            "Bør vi innføre skatt på automatiserte systemer og roboter som overtar menneskers jobber?",
+            "Hvordan kan vi løse klimakrisen når kortsiktig profitt nesten alltid trumfer langsiktig tenkning?",
+            "Er det riktig at sosiale medier-algoritmer former den politiske debatten, eller bør de reguleres strengt?",
+            "Bør samfunnet bevege seg mot 4-dagers arbeidsuke, og hvordan vil det påvirke livskvaliteten?",
+            "Er frihet viktigere enn likhet, eller kan man ikke ha den ene uten den andre?",
+            "Hvordan bør samfunnet innrette seg når folk potensielt vil leve til de blir over 110 år gamle?",
+            "Hvem bør holdes ansvarlig når en autonom kunstig intelligens forårsaker en ulykke?",
+            "Er det fornuftig å bruke ressurser på å kolonisere andre planeter, eller bør vi prioritere jorda først?",
+            "Burde all vitenskapelig forskning og akademiske artikler være gratis og åpent tilgjengelig for alle?",
+            "Gjør en sterk velferdsstat oss mer trygge og nyskapende, eller mer passive?",
+            "Hva er den viktigste samfunnssaken som mediene vier altfor lite oppmerksomhet til?",
+            "Hvordan ville samfunnet fungert dersom all formuesarv ble avskaffet?",
+            "Bør helsevesenet i langt større grad premieres for forebygging fremfor behandling?"
+        ];
+
+        let globalShuffledTopics = [];
+
+        function shuffleArray(array) {
+            let arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function initTopics() {
+            const sCorny = shuffleArray(dbCorny);
+            const sSerious = shuffleArray(dbSerious);
+            const sPhil = shuffleArray(dbPhil);
+            const sPol = shuffleArray(dbPolitics);
+
+            const maxLength = Math.max(sCorny.length, sSerious.length, sPhil.length, sPol.length);
+            globalShuffledTopics = [];
+            
+            for (let i = 0; i < maxLength; i++) {
+                if(sCorny[i]) globalShuffledTopics.push(sCorny[i]);
+                if(sSerious[i]) globalShuffledTopics.push(sSerious[i]);
+                if(sPhil[i]) globalShuffledTopics.push(sPhil[i]);
+                if(sPol[i]) globalShuffledTopics.push(sPol[i]);
+            }
+        }
 
         async function initAuthAndData() {
             try {
@@ -526,20 +718,22 @@
                 const profilesRef = collection(db, 'artifacts', appId, 'public', 'data', 'profiles');
 
                 onSnapshot(profilesRef, (snapshot) => {
-                    const prevGoersCount = festivalGoers.length;
                     festivalGoers = [];
                     snapshot.forEach((docSnap) => {
                         festivalGoers.push({ id: docSnap.id, ...docSnap.data() });
                     });
                     
-                    const myProfile = festivalGoers.find(p => p.id === user.uid);
+                    const savedProfileId = localStorage.getItem('mj_saved_profile_id');
+                    let myProfile = festivalGoers.find(p => p.id === user.uid || (savedProfileId && p.id === savedProfileId));
+                    
                     if (myProfile) {
                         currentUser = myProfile;
+                        localStorage.setItem('mj_saved_profile_id', myProfile.id);
                         updateUserBadge();
+                        listenForSkals();
                         document.getElementById('bottom-nav').classList.remove('hidden');
                         document.getElementById('bottom-nav').classList.add('flex');
                         
-                        // Auto-show match view for returning users if welcome is currently visible
                         if (!document.getElementById('sec-welcome').classList.contains('hidden')) {
                             showSection('match-view');
                         }
@@ -547,13 +741,132 @@
 
                     if (!document.getElementById('sec-match-view').classList.contains('hidden')) {
                         updateSortedCandidates();
-                        renderCurrentMatch(false); // don't wipe user reading position unless candidate list empty
+                        renderCurrentMatch(false);
                     }
                 }, (error) => {
                     console.error("Firestore error listening to profiles:", error);
                 });
             });
         }
+
+        function listenForSkals() {
+            if (!currentUser) return;
+            const skalsRef = collection(db, 'artifacts', appId, 'public', 'data', 'skals');
+            
+            onSnapshot(skalsRef, (snapshot) => {
+                const newSkals = [];
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    if (data.toId === currentUser.id) {
+                        newSkals.push({ id: docSnap.id, ...data });
+                    }
+                });
+
+                newSkals.sort((a, b) => b.timestamp - a.timestamp);
+
+                if (newSkals.length > receivedSkals.length && receivedSkals.length > 0) {
+                    const latest = newSkals[0];
+                    showIncomingSkalToast(latest.fromName);
+                }
+
+                receivedSkals = newSkals;
+                updateSkalBadge();
+            }, (error) => {
+                console.error("Feil ved lytting på skåler:", error);
+            });
+        }
+
+        function updateSkalBadge() {
+            const badgeBtn = document.getElementById('btn-skal-badge');
+            const skalCountEl = document.getElementById('skal-count');
+            if (!badgeBtn || !skalCountEl) return;
+
+            if (receivedSkals.length > 0) {
+                skalCountEl.textContent = receivedSkals.length;
+                badgeBtn.classList.remove('hidden');
+            } else {
+                badgeBtn.classList.add('hidden');
+            }
+        }
+
+        function showIncomingSkalToast(senderName) {
+            const toast = document.getElementById('skal-toast');
+            const toastText = document.getElementById('skal-toast-text');
+            if (toast && toastText) {
+                toastText.textContent = `🍻 ${escapeHTML(senderName)} sendte deg akkurat en skål!`;
+                toast.classList.remove('hidden');
+                setTimeout(() => { toast.classList.add('hidden'); }, 4000);
+            }
+        }
+
+        window.showSkalModal = function() {
+            const modal = document.getElementById('skal-modal');
+            const listEl = document.getElementById('skal-list');
+            if (!modal || !listEl) return;
+
+            if (receivedSkals.length === 0) {
+                listEl.innerHTML = `<p class="text-xs text-gray-500 italic py-4 text-center">Ingen har skålt med deg ennå. Send noen skåler selv for å få fart på sakene!</p>`;
+            } else {
+                listEl.innerHTML = receivedSkals.map(s => `
+                    <div class="flex items-center gap-3 bg-gray-950/80 p-3 rounded-2xl border border-gray-800">
+                        <img src="${escapeHTML(s.fromAvatar || 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')}" class="w-10 h-10 rounded-xl object-cover bg-gray-800 border border-fest-pink flex-shrink-0" alt="Avatar">
+                        <div class="overflow-hidden flex-1">
+                            <div class="flex justify-between items-baseline">
+                                <span class="text-sm font-bold text-white truncate">${escapeHTML(s.fromName)}</span>
+                                <span class="text-[10px] text-fest-yellow font-semibold">🍻 SKÅL!</span>
+                            </div>
+                            ${s.fromSpot ? `<p class="text-[11px] text-fest-accent truncate mt-0.5"><i class="fa-solid fa-eye text-[9px]"></i> ${escapeHTML(s.fromSpot)}</p>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            modal.classList.remove('hidden');
+        };
+
+        window.hideSkalModal = function() {
+            document.getElementById('skal-modal').classList.add('hidden');
+        };
+
+        window.showClaimModal = function() {
+            document.getElementById('claim-modal').classList.remove('hidden');
+            document.getElementById('claim-input').focus();
+        };
+
+        window.hideClaimModal = function() {
+            document.getElementById('claim-modal').classList.add('hidden');
+            document.getElementById('claim-error').classList.add('hidden');
+        };
+
+        window.handleClaimProfile = function() {
+            const inputVal = (document.getElementById('claim-input').value || '').trim().toLowerCase();
+            const errEl = document.getElementById('claim-error');
+            
+            if (!inputVal) {
+                errEl.textContent = 'Vennligst oppgi et alias eller navn.';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            const matchedProfile = festivalGoers.find(p => 
+                (p.alias && p.alias.toLowerCase() === inputVal) || 
+                (p.name && p.name.toLowerCase() === inputVal)
+            );
+
+            if (matchedProfile) {
+                currentUser = matchedProfile;
+                localStorage.setItem('mj_saved_profile_id', matchedProfile.id);
+                updateUserBadge();
+                listenForSkals();
+                hideClaimModal();
+                document.getElementById('bottom-nav').classList.remove('hidden');
+                document.getElementById('bottom-nav').classList.add('flex');
+                showSection('match-view');
+            } else {
+                errEl.textContent = 'Fant ingen profil med det aliaset/navnet. Sjekk skrivefeil!';
+                errEl.classList.remove('hidden');
+            }
+        };
 
         window.showSection = function(sectionId) {
             document.getElementById('sec-welcome').classList.add('hidden');
@@ -657,7 +970,6 @@
             }
         };
 
-        // Resize image to max 250x250 JPEG to stay well under Firestore doc limits & save mobile data
         function compressImageDataURL(imgOrCanvas, callback) {
             const maxDim = 250;
             const offscreen = document.createElement('canvas');
@@ -753,7 +1065,6 @@
             } else if (canvas && hasDrawnOnCanvas) {
                 avatarData = canvas.toDataURL('image/jpeg', 0.7);
             } else {
-                // Generate simple placeholder canvas
                 const pCanvas = document.createElement('canvas');
                 pCanvas.width = 150; pCanvas.height = 150;
                 const pCtx = pCanvas.getContext('2d');
@@ -764,8 +1075,10 @@
                 avatarData = pCanvas.toDataURL('image/jpeg', 0.7);
             }
 
+            const profileDocId = (currentUser && currentUser.id) ? currentUser.id : authUser.uid;
+
             currentUser = {
-                id: authUser.uid,
+                id: profileDocId,
                 name: (document.getElementById('field-name').value || 'Anonym').trim().substring(0, 60),
                 age: (document.getElementById('field-age').value || 'Ukjent').trim().substring(0, 15),
                 alias: (document.getElementById('field-alias').value || '').trim().substring(0, 60),
@@ -786,10 +1099,12 @@
             };
 
             try {
-                const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'profiles', authUser.uid);
+                const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'profiles', profileDocId);
                 await setDoc(userDocRef, currentUser);
                 
+                localStorage.setItem('mj_saved_profile_id', profileDocId);
                 updateUserBadge();
+                listenForSkals();
                 document.getElementById('bottom-nav').classList.remove('hidden');
                 document.getElementById('bottom-nav').classList.add('flex');
                 candidateIndex = 0;
@@ -877,6 +1192,49 @@
             sortedCandidates = candidates;
         }
 
+        function getMatchOffset(matchId) {
+            if (!matchId) return 0;
+            let hash = 0;
+            for (let i = 0; i < matchId.length; i++) {
+                hash = (hash << 5) - hash + matchId.charCodeAt(i);
+                hash |= 0;
+            }
+            return Math.abs(hash);
+        }
+
+        function generateMatchTopic(match, index) {
+            const offset = getMatchOffset(match ? match.id : 'default');
+
+            if (currentUser && currentUser.socialPref === "Random prat med random person") {
+                const q = globalShuffledTopics[(offset + index) % globalShuffledTopics.length];
+                return `«${q}»`;
+            }
+
+            const isBandMatch = currentUser && currentUser.musicPref === "Noen å (kanskje) spille i band med";
+            const isMusicNerdUser = currentUser && currentUser.musicPref === "Noen å nørde om musikk med" && currentUser.nerdGenre === "MUSIKK!!!";
+            const isMusicNerdCandidate = match && match.musicPref === "Noen å nørde om musikk med" && match.nerdGenre === "MUSIKK!!!";
+
+            if (index === 0) {
+                if (isBandMatch) {
+                    return `«Hva foretrekker du egentlig på scenen: 5/4 eller 7/4-takt når det virkelig skal gjelde?»`;
+                }
+                if (isMusicNerdUser && isMusicNerdCandidate) {
+                    const band = match.favBand ? escapeHTML(match.favBand) : "favorittbandet ditt";
+                    return `«Hva er den absolutt mest obskure B-siden eller 7-tommeren til ${band} som vanlige dødelige ikke har hørt?»`;
+                }
+
+                if (match.favTopic) return `«Kan du gi meg en 3-minutters lyninnføring i drømmesamtaletemaet ditt: "${escapeHTML(match.favTopic)}"?»`;
+                if (match.favEquation) return `«Hvorfor i alle dager er "${escapeHTML(match.favEquation)}" den absolutt råeste ligningen i universet?»`;
+                if (match.favBand) return `«Hva er det som gjør at "${escapeHTML(match.favBand)}" rager høyest på din personlige adelskalender?»`;
+                if (match.favPassion) return `«Hvorfor brenner du så sykt for ${escapeHTML(match.favPassion)}?»`;
+                if (match.favBook) return `«Hva var det med boka "${escapeHTML(match.favBook)}" som forandret synet ditt på verden?»`;
+            }
+
+            const dbIndex = (offset + index) % globalShuffledTopics.length;
+            const fallbackQ = globalShuffledTopics[dbIndex];
+            return `«${fallbackQ}»`;
+        }
+
         function renderCurrentMatch(resetIfSame = false) {
             const container = document.getElementById('single-match-card');
             const badge = document.getElementById('match-badge');
@@ -894,7 +1252,6 @@
 
             const match = sortedCandidates[candidateIndex];
             
-            // If already rendering this match and not requested to force refresh, leave visual state alone
             if (!resetIfSame && currentMatchCandidate && currentMatchCandidate.id === match.id) {
                 return;
             }
@@ -913,7 +1270,6 @@
             const matchDisplayName = escapeHTML(match.alias || match.name);
             const topic = generateMatchTopic(match, topicIndex);
 
-            // Safe DOM Construction (XSS prevention)
             container.innerHTML = `
                 <div class="flex items-start gap-4 border-b border-gray-800 pb-4">
                     <img src="${escapeHTML(match.avatar)}" class="w-20 h-20 rounded-2xl object-cover bg-gray-900 border-2 border-fest-pink flex-shrink-0" alt="Avatar for ${escapeHTML(match.name)}">
@@ -926,6 +1282,12 @@
                             <span class="bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">🤓 ${escapeHTML(match.nerdGenre)}</span>
                         </div>
                     </div>
+                </div>
+
+                <div class="bg-gray-950/70 rounded-2xl p-3 border border-gray-800 space-y-1 text-xs">
+                    <div class="flex items-center gap-1.5 text-[11px]"><i class="fa-solid fa-heart text-fest-pink w-4 text-center"></i> <span class="text-gray-400">Romantisk:</span> <span class="font-semibold text-gray-200">${escapeHTML(match.romantic || 'Ikke oppgitt')}</span></div>
+                    <div class="flex items-center gap-1.5 text-[11px]"><i class="fa-solid fa-guitar text-fest-yellow w-4 text-center"></i> <span class="text-gray-400">Musikk:</span> <span class="font-semibold text-gray-200">${escapeHTML(match.musicPref || 'Ikke oppgitt')}</span></div>
+                    <div class="flex items-center gap-1.5 text-[11px]"><i class="fa-solid fa-comments text-fest-accent w-4 text-center"></i> <span class="text-gray-400">Bli kjent:</span> <span class="font-semibold text-gray-200">${escapeHTML(match.socialPref || 'Ikke oppgitt')}</span></div>
                 </div>
 
                 <div class="bg-gradient-to-r from-purple-950/70 via-gray-900 to-fest-pink/20 p-4 rounded-2xl border border-fest-pink/50 space-y-1.5">
@@ -950,7 +1312,6 @@
                 </div>
             `;
 
-            // Dynamic event binding to avoid inline quote injection vulnerabilities
             document.getElementById('btn-send-skal').addEventListener('click', () => {
                 sendSkal(matchDisplayName);
             });
@@ -958,59 +1319,29 @@
             updateMatchButtonState();
         }
 
-        function generateMatchTopic(match, index) {
-            const wildFreeQuestions = [
-                `«Hvis du måtte tilbringe et helt år på en øde øy med enten en kverulerende trekkspiller eller en taus mimekunstner, hvem velger du?»`,
-                `«Hvilken romvesen-rase mistenker du hemmelig at styrer miksebordet på Hovedscenen i kveld?»`,
-                `«Hvis du våknet i morgen og oppdaget at du kunne snakke flytende med enten gresshopper eller ekorn, hva spør du dem om først?»`,
-                `«Ville du heller hatt tiere som føtter eller bananer som fingre resten av festivalen?»`,
-                `«Hvis du kunne bytte ut nasjonalsangen med en valfri låt fra 90-tallet, hvilken låt rykker rett til topps?»`,
-                `«Tror du dinosaurer egentlig hadde fargerike fjørdrakter og fremførte intrikate rocke-operaer før meteoritten kom?»`,
-                `«Hva ville du kalt en kaffebar som kun var bemannet av gretne katter i skinnjakker?»`,
-                `«Hvis du måtte leve resten av livet i en kontinuerlig tidsløkke på et nasj fra 2007, hva ville du pakket i sekken?»`
-            ];
-
-            // Random social preference gets wild questions
-            if (currentUser && currentUser.socialPref === "Random prat med random person") {
-                return wildFreeQuestions[index % wildFreeQuestions.length];
-            }
-
-            // Topic index > 0 wanders away into associative territory
-            if (index > 0) {
-                return wildFreeQuestions[(index - 1) % wildFreeQuestions.length];
-            }
-
-            // BAND MATCH QUESTIONS
-            const isBandMatch = currentUser && currentUser.musicPref === "Noen å (kanskje) spille i band med";
-            if (isBandMatch) {
-                return `«Hva foretrekker du egentlig på scenen: 5/4 eller 7/4-takt når det virkelig skal gjelde?»`;
-            }
-
-            // MUSIC NERD QUESTIONS (Must match BOTH criteria)
-            const isMusicNerdUser = currentUser && currentUser.musicPref === "Noen å nørde om musikk med" && currentUser.nerdGenre === "MUSIKK!!!";
-            const isMusicNerdCandidate = match && match.musicPref === "Noen å nørde om musikk med" && match.nerdGenre === "MUSIKK!!!";
-            if (isMusicNerdUser && isMusicNerdCandidate) {
-                const band = match.favBand ? escapeHTML(match.favBand) : "favorittbandet ditt";
-                return `«Hva er den absolutt mest obskure B-siden eller 7-tommeren til ${band} som vanlige dødelige ikke har hørt?»`;
-            }
-
-            // FIRST QUESTION: ANCHORED IN PROFILE INTERESTS
-            if (match.favEquation) return `«Hvorfor i alle dager er "${escapeHTML(match.favEquation)}" den absolutt råeste ligningen i universet?»`;
-            if (match.favBand) return `«Hva er det som gjør at "${escapeHTML(match.favBand)}" rager høyest på din personlige adelskalender?»`;
-            if (match.favPassion) return `«Hvorfor brenner du så sykt for ${escapeHTML(match.favPassion)}?»`;
-            if (match.favBook) return `«Hva var det med boka "${escapeHTML(match.favBook)}" som forandret synet ditt på verden?»`;
-            if (match.favTopic) return `«Kan du gi meg en 3-minutters lyninnføring i drømmesamtaletemaet ditt: "${escapeHTML(match.favTopic)}"?»`;
-
-            return `«Hva var det mest usannsynlige sammentreffet som brakte deg til Merjemterud-festivalen i år?»`;
-        }
-
-        function sendSkal(name) {
+        async function sendSkal(matchDisplayName) {
             const toast = document.getElementById('skal-toast');
             const toastText = document.getElementById('skal-toast-text');
             if (toast && toastText) {
-                toastText.textContent = `🍻 Du sendte en virtuel skål til ${name}! Gå og finn vedkommende i mengden!`;
+                toastText.textContent = `🍻 Du sendte en virtuell skål til ${matchDisplayName}! Gå og finn vedkommende i mengden!`;
                 toast.classList.remove('hidden');
                 setTimeout(() => { toast.classList.add('hidden'); }, 3500);
+            }
+
+            if (db && currentUser && currentMatchCandidate) {
+                try {
+                    const skalDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'skals', `${currentUser.id}_${currentMatchCandidate.id}`);
+                    await setDoc(skalDocRef, {
+                        fromId: currentUser.id,
+                        fromName: currentUser.alias || currentUser.name,
+                        fromAvatar: currentUser.avatar || '',
+                        fromSpot: currentUser.howToSpot || '',
+                        toId: currentMatchCandidate.id,
+                        timestamp: Date.now()
+                    });
+                } catch (err) {
+                    console.error("Feil ved lagring av skål:", err);
+                }
             }
         }
 
@@ -1065,6 +1396,7 @@
 
         window.onload = function() {
             window.initCanvas();
+            initTopics();
             initAuthAndData();
         };
     </script>
