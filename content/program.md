@@ -35,6 +35,7 @@ Radioscena, Roynes
 09:00 | Radioscena | Frokost-tv, men på radio |
 10:00 | Radioscena | Tenkende maskiner og superhelter | Inga Strümke og Vidar Skogvoll
 11:00 | Radioscena | Partikkelfysikk for neper | Are Raklev, Anders Kvellestad og Eli Bæverfjord
+11:00 | Roynes     | Erotisk poesi i badstua | Beate Riiser leser fra sin erotiske diktsamling. Dampende hett. Badetøy: valgfritt.
 12:00 | Radioscena | Fra Joe Hill til Rosastreik | Fäcket vs Faaagforeninga. Jonas Balls, Mattias Theliander och Jenny.
 12:00 | Roynes     | Ove og Eivinds Bluegrass Experience | Banjo, lutt, gitar og alt som er gøy
 13:00 | Radioscena | Auksjon | By på svartmetallkake eller Tusmørke-dassrullskjulere. Ved MC & Selecta Zlatan
@@ -42,7 +43,6 @@ Radioscena, Roynes
 14:00 | Radioscena | Marthas slappatime | Martha Våge preiker med folk og sørger for lun stemning
 14:00 | Roynes     | Grunnkurs i synkronsvømming | Ved Anne-Laila og Karolina. I og utenfor saunaen.
 15:00 | Radioscena | Satan, døden og kjærligheten | Kristoffer Momrak, Ida Gravensten & Einar Duenger Bøhn
-15:00 | Roynes     | Erotisk poesi i badstua | Beate Riiser leser fra sin erotiske diktsamling. Dampende hett. Badetøy: valgfritt.
 16:45 | Radioscena | Higgs vs Higgs | Et band og en fysiker forsøker å forstå hverandre.
 
 :program/lordag-kveld
