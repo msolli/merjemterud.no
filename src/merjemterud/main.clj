@@ -137,6 +137,13 @@
      [:span.onair [:span.onair__pip] "On air"]
      [:p.radio__text text]]))
 
+(defn forjemterud-note
+  "The Friday reception, before the first grid starts. Not on a stage, so it
+   sits between the radio banner and the Fredag runsheet."
+  [body]
+  (when (not-empty body)
+    [:div.forjemterud (prose body)]))
+
 (defn slot
   "One event. The time/stage line is hidden on wide screens, where the grid
    already says both, and shown when the grid collapses to a list."
@@ -182,16 +189,6 @@
        [:p.runsheet-block__span (program/time-span data)]
        (runsheet data)])))
 
-(defn chip-strip
-  "Comma-separated things that run all weekend, with no time of their own."
-  [title source]
-  (when (not-empty source)
-    [:div.runsheet-block
-     [:h2.block__title title]
-     [:ul.facts
-      (for [item (map str/trim (str/split source #","))]
-        [:li.tape.tape--grey item])]]))
-
 (defn program-page
   [page]
   (layout page
@@ -201,10 +198,12 @@
             [:h1.section__title "Program"]
             (prose (:program/note page))
             (radio-strip (:program/radio page))
+            (forjemterud-note (:program/forjemterud page))
             (runsheet-block "Fredag" (:program/fredag-kveld page))
             (runsheet-block "Lørdag dag" (:program/lordag-dag page))
             (runsheet-block "Lørdag kveld" (:program/lordag-kveld page))
-            (chip-strip "Andre aktiviteter" (:program/andre page))]]
+            (content-block "Hele helga, andre steder" (:program/andre page))
+            (content-block "Søndag formiddag" (:program/sondag page))]]
           (cta-band page)))
 
 ;; ── Match page ─────────────────────────────────────────────

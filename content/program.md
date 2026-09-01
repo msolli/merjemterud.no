@@ -6,20 +6,19 @@
 
 :cta/url https://pages.oiiku.com/p/8dc66c19f4803a4d995c631194121878907748e2d41f868ad48d33f35a999758
 
-:program/note
-
-(Det kan bli endringer i programmet. Kan ikke garantere at alle band spiller på oppsatt tid. Følg med, følg med.)
-
 :program/radio
 
 Radio Jemterud starter fredag 12.00. Streames på denne sida. Preiking, musikk og oppdateringer for gjester på vei til festival.
+
+:program/forjemterud
+
+**15:00 · Førjemterud og mottakelse.** Velkomstdrinker og taffeljazz i mottakelsesområdet for de som kommer tidlig. Jazz ved Tesalongen. Joko Russian serveres av karibisk barmester Jenny.
 
 :program/fredag-kveld
 
 Hovedscena, Pubscena
 
-17:30 | Hovedscena | Offisiell åpning ved festivalledelsen | Inkl.: Analyse av den norrøne guden for pønk
-18:00 | Pubscena   | Performance |
+17:30 | Hovedscena | Offisiell åpning ved festivalledelsen | Inkl.: Analyse av den norrøne guden for pønk. Og performance.
 18:30 | Hovedscena | Blikstilt | Nøkkelharpe og piano. Vakkert, vakkert.
 19:30 | Hovedscena | Svartskog spelemannslag | Inkluderende folkemusikk av ypperste kaliber
 20:30 | Hovedscena | Det förflutna | Jemterud-koffert
@@ -30,29 +29,27 @@ Hovedscena, Pubscena
 
 :program/lordag-dag
 
-Radioscena, Roynes, Andre steder
+Radioscena, Roynes
 
-08:00 | Roynes       | Morgensauna |
-09:00 | Radioscena   | Frokost-tv, men på radio |
-10:00 | Radioscena   | Tenker maskinene nå? | KI som superhelt. Inga Strümke og Vidar Skogvoll
-10:00 | Andre steder | Samtidsdansens ABC #1 |
-11:00 | Radioscena   | Fra Joe Hill til Teslastreik | Svensk fagforeningshistorie
-11:00 | Andre steder | Landskapsmaleri med StrapOn-pensel #1 |
-12:00 | Radioscena   | Auksjon |
-12:30 | Roynes       | Te-salongen |
-13:00 | Andre steder | Samtidsdansens ABC #2 |
-13:00 | Andre steder | Landskapsmaleri med StrapOn-pensel #2 |
-13:00 | Andre steder | Sysselmann | (med samtidsdans i praksis)
-14:00 | Radioscena   | Partikkelfysikk for neper | Raklev og Kvellestad
-14:00 | Andre steder | Krasjkurs i synkronsvømming | (Sauna / Roynes)
-15:00 | Radioscena   | Satan, døden og kjærligheten | Momrak, Gravensteen og Duenger Bøhn
+08:00 | Roynes     | Morgensauna |
+09:00 | Radioscena | Frokost-tv, men på radio |
+10:00 | Radioscena | Tenkende maskiner og superhelter | Inga Strümke og Vidar Skogvoll
+11:00 | Radioscena | Partikkelfysikk for neper | Are Raklev, Anders Kvellestad og Eli Bæverfjord
+12:00 | Radioscena | Fra Joe Hill til Rosastreik | Fäcket vs Faaagforeninga. Jonas Balls, Mattias Theliander och Jenny.
+12:00 | Roynes     | Ove og Eivinds Bluegrass Experience | Banjo, lutt, gitar og alt som er gøy
+13:00 | Radioscena | Auksjon | By på svartmetallkake eller Tusmørke-dassrullskjulere. Ved MC & Selecta Zlatan
+13:30 | Roynes     | Tesalongen | Ca. Legender. Starta å spille sammen på Asker gymnas i 1968. Spiller fortsatt.
+14:00 | Radioscena | Marthas slappatime | Martha Våge preiker med folk og sørger for lun stemning
+14:00 | Roynes     | Grunnkurs i synkronsvømming | Ved Anne-Laila og Karolina. I og utenfor saunaen.
+15:00 | Radioscena | Satan, døden og kjærligheten | Kristoffer Momrak, Ida Gravensten & Einar Duenger Bøhn
+15:00 | Roynes     | Erotisk poesi i badstua | Beate Riiser leser fra sin erotiske diktsamling. Dampende hett. Badetøy: valgfritt.
+16:45 | Radioscena | Higgs vs Higgs | Et band og en fysiker forsøker å forstå hverandre.
 
 :program/lordag-kveld
 
 Hovedscena, Pubscena
 
 16:00 | Hovedscena | Onklene | Legendarisk Askerband fra 90-tallet. Første konsert på 10 år! Også så pene!
-16:45 | Pubscena   | Higgs vs Higgs | Fysiker prater med band
 17:30 | Hovedscena | Higgs Boson | Oslo Power Violence. (Hardcore.) Og for et navn!
 18:15 | Pubscena   | Einar Duenger Bøhn | Viser om kjærlighet
 19:00 | Hovedscena | Oslo skrotum | True Norwegian Badcore fra et høl uttafor Lier.
@@ -65,4 +62,18 @@ Hovedscena, Pubscena
 
 :program/andre
 
-Svartmetallsauna, Natursti, Åpent museum, Badestamp
+- **Landskapsmaleri med StrapOn-pensel** — workshop ved Hanna Sjöstrand. Finn standen og sett deg på liste. Fortløpende påmelding.
+- **Samtidsdansens ABC** — to kurs, kl. 10:00 og kl. 15:00. GuroAnna by Proxy: Morten Knudsen.
+- **Marias Mørchmakeri** — trykk ditt eget festivalplagg. Ta med noe (gjerne lyst) å trykke på. Ved Maria Astrup.
+- **Natursti (i naturen)** — ved Maren Esmark.
+- **Gustavsfors bruksmuseum** — midt mellom Alcatraz og Roynes. Åpent fra 13–16.
+- **Elviras Glass** — slussmester Jonathan forteller skrøner og selger is, pannekaker og suppe.
+- **Badestamp** — på Roynes. Klar fra kl. 12.
+- **Seint: Nasj i skauen** — følg nasjmester Anne-Gerd til en mystisk paviljong i skauen.
+- **Også seint: Svartmetallnash i jordkjellern** — trangt, kaldt, kølsvart, skittent og ukomfortabelt. Som det skal værra.
+
+:program/sondag
+
+- **Morgensauna** — hvis noen er interessert: bestill direkte fra Roynes Sjømagasin.
+- **Frokost** med morgenradio og beroligende musikk.
+- **Rydding, vask og utsjekk.**

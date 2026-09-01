@@ -58,6 +58,9 @@
  {:db/ident       :program/radio
   :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}
+ {:db/ident       :program/forjemterud
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
  {:db/ident       :program/fredag-kveld
   :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}
@@ -68,6 +71,9 @@
   :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}
  {:db/ident       :program/andre
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+ {:db/ident       :program/sondag
   :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}
 

@@ -309,8 +309,8 @@ a:hover { background: var(--tape-yellow); text-decoration: none; }
 }
 
 /* ── Content blocks (Program / Praktisk) ─────────────────────── */
-.block { margin-top: 44px; }
-.block:first-of-type { margin-top: 28px; }
+.block,
+.runsheet-block { margin-top: 56px; }
 .block__title {
   margin: 0 0 16px;
   font-family: var(--font-marker);
@@ -341,7 +341,8 @@ a:hover { background: var(--tape-yellow); text-decoration: none; }
   line-height: 1.5;
 }
 
-.runsheet-block { margin-top: 56px; }
+.forjemterud { margin-top: 56px; }
+
 .runsheet-block .block__title { margin-bottom: 4px; }
 .runsheet-block__span {
   margin: 0 0 18px;
