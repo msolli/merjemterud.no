@@ -37,6 +37,13 @@
   :db/valueType   :db.type/string
   :db/cardinality :db.cardinality/one}
 
+ ;; Radio Jemterud — the AzuraCast public page, linked from both the front page
+ ;; and the program page. render-page sees one page at a time, so the value is
+ ;; duplicated in both content files, exactly as :cta/url is.
+ {:db/ident       :radio/url
+  :db/valueType   :db.type/string
+  :db/cardinality :db.cardinality/one}
+
  ;; Front-page program teaser
  {:db/ident       :teaser/body
   :db/valueType   :db.type/string

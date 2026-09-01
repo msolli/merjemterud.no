@@ -2,6 +2,7 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
             [merjemterud.program :as program]
+            [powerpack.hiccup :as hiccup]
             [powerpack.markdown :as md]))
 
 (defn prose
@@ -14,6 +15,79 @@
   [title]
   (for [word (str/split (str title) #"\s+")]
     [:span.tape.tape--grey.hero__word word]))
+
+;; ── Radio Jemterud ─────────────────────────────────────────
+;;
+;; The station is off air most of the time, so both the pip and the button are
+;; rendered in the OFF state and only lifted to LIVE by radio-status-script.
+;; A reader without JavaScript sees a working link and an honest "not on air".
+
+(def radio-live-label "På lufta")
+(def radio-off-label "Ikke på lufta")
+
+(defn onair-pip
+  "Status pip and its label. `bare?` drops the bordered box, for the hero, where
+   a second framed element would compete with the stamp and the tape title."
+  [bare?]
+  [:span {:class (str "onair" (when bare? " onair--bare"))
+          :data-radio-pip true}
+   [:span.onair__pip]
+   [:span {:data-radio-label true} radio-off-label]])
+
+(defn radio-button
+  [page]
+  (when-let [url (:radio/url page)]
+    [:a.btn.btn--radio.is-off {:href url
+                               :target "_blank"
+                               :rel "noopener"
+                               :data-radio-btn true}
+     "Hør Radio Jemterud →"]))
+
+(def radio-status-script
+  "Poll AzuraCast for on-air state and mirror it onto every pip and button.
+
+   LIVE is HTTP 200 and live.is_live true. Everything else — 404 while the
+   station is down, a network error, malformed JSON — reads OFF, because from a
+   listener's seat unreachable is off air.
+
+   Polling stops while the tab is hidden and re-fetches on the way back. The API
+   caches for 15 s, so a 30 s period loses nothing."
+  (str "(function () {
+  var api = 'https://merjemterud.torshov.club/api/nowplaying/merjemterud';
+  var period = 30000;
+  var timer = null;
+  var liveLabel = '" radio-live-label "';
+  var offLabel = '" radio-off-label "';
+
+  function paint(live) {
+    var pips = document.querySelectorAll('[data-radio-pip]');
+    for (var i = 0; i < pips.length; i++) {
+      pips[i].classList.toggle('onair--live', live);
+      var label = pips[i].querySelector('[data-radio-label]');
+      if (label) label.textContent = live ? liveLabel : offLabel;
+    }
+    var btns = document.querySelectorAll('[data-radio-btn]');
+    for (var j = 0; j < btns.length; j++) btns[j].classList.toggle('is-off', !live);
+  }
+
+  function poll() {
+    fetch(api, { cache: 'no-store' })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (data) { paint(!!(data && data.live && data.live.is_live)); })
+      .catch(function () { paint(false); });
+  }
+
+  function start() { poll(); timer = setInterval(poll, period); }
+  function stop() { clearInterval(timer); timer = null; }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) { stop(); } else if (!timer) { start(); }
+  });
+
+  // A tab opened in the background waits for its first visibilitychange, so the
+  // interval only ever runs while someone can see the pip.
+  if (!document.hidden) { start(); }
+})();"))
 
 ;; ── Shared chrome ──────────────────────────────────────────
 
@@ -62,7 +136,9 @@
    [:body
     (site-nav page)
     (into [:main.site] body)
-    (site-footer)]])
+    (site-footer)
+    [:script {:type "text/javascript"}
+     (hiccup/unescape radio-status-script)]]])
 
 (defn content-block
   "Subtitle + rendered markdown, one stop on a Program/Praktisk page."
@@ -82,7 +158,9 @@
     [:p.hero__tagline (:hero/tagline page)]
     [:p.hero__lead (:hero/lead page)]
     [:div.hero__actions
-     [:a.btn.btn--primary.btn--lg {:href (:cta/url page)} (:cta/label page)]]]
+     [:a.btn.btn--primary.btn--lg {:href (:cta/url page)} (:cta/label page)]
+     (radio-button page)
+     (onair-pip true)]]
    [:div.stamp
     [:span.stamp__big "50"]
     [:span.stamp__sub "år"]
@@ -131,11 +209,12 @@
 
 (defn radio-strip
   "Radio Jemterud isn't on any stage — it gets a banner above the grids."
-  [text]
-  (when (not-empty text)
+  [page]
+  (when-let [text (not-empty (:program/radio page))]
     [:div.radio
-     [:span.onair [:span.onair__pip] "On air"]
-     [:p.radio__text text]]))
+     (onair-pip false)
+     [:p.radio__text text]
+     (radio-button page)]))
 
 (defn forjemterud-note
   "The Friday reception, before the first grid starts. Not on a stage, so it
@@ -197,7 +276,7 @@
             [:div.eyebrow-row [:span.tape.tape--yellow "Program"]]
             [:h1.section__title "Program"]
             (prose (:program/note page))
-            (radio-strip (:program/radio page))
+            (radio-strip page)
             (forjemterud-note (:program/forjemterud page))
             (runsheet-block "Fredag" (:program/fredag-kveld page))
             (runsheet-block "Lørdag dag" (:program/lordag-dag page))

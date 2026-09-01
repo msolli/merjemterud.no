@@ -92,11 +92,18 @@ a:hover { background: var(--tape-yellow); text-decoration: none; }
 .btn--primary { background: var(--marker-black); color: var(--paper);        box-shadow: var(--shadow-grey); }
 .btn--dark    { background: var(--marker-black); color: var(--tape-yellow);   box-shadow: var(--shadow-yellow); }
 .btn--ghost   { background: transparent;         color: var(--marker-black);  box-shadow: none; }
+/* Radio: light ground with a red frame, so it reads as a second action next to
+   the solid black ticket CTA rather than tying with it. `.is-off` mutes it to
+   grey while the station is down — still a link, still tabbable. */
+.btn--radio   { background: var(--paper);        color: var(--marker-black);  border-color: var(--freq-red); box-shadow: 4px 4px 0 var(--freq-red); }
+.btn--radio.is-off { background: transparent;    color: var(--studio-grey);   border-color: var(--concrete-grey); box-shadow: none; }
 .btn:hover    { background: var(--tape-yellow); color: var(--marker-black); }
 .btn:active   { transform: translate(2px, 2px); box-shadow: none; }
 .btn:focus-visible { outline: 3px solid var(--tape-yellow); outline-offset: 2px; }
 
-/* ── ON AIR pip ──────────────────────────────────────────────── */
+/* ── ON AIR pip ────────────────────────────────────────────────
+   Off air is the resting state: grey and still. The script adds `.onair--live`
+   when AzuraCast reports a streamer, and only then does anything blink. */
 .onair {
   display: inline-flex;
   align-items: center;
@@ -105,15 +112,18 @@ a:hover { background: var(--tape-yellow); text-decoration: none; }
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--freq-red);
-  border: 1.5px solid var(--freq-red);
+  color: var(--studio-grey);
+  border: 1.5px solid var(--concrete-grey);
   padding: 6px 11px 5px;
 }
+/* Hero variant: pip and label with no frame of their own. */
+.onair--bare { border: none; padding: 0; }
+.onair--live { color: var(--freq-red); border-color: var(--freq-red); }
 .onair__pip {
   width: 8px; height: 8px; border-radius: 50%;
-  background: var(--freq-red);
-  animation: pip-blink 1s steps(2) infinite;
+  background: currentColor;
 }
+.onair--live .onair__pip { animation: pip-blink 1s steps(2) infinite; }
 @keyframes pip-blink { 50% { opacity: 0.25; } }
 
 /* ── Top nav ─────────────────────────────────────────────────── */
