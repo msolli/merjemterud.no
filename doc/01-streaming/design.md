@@ -49,6 +49,13 @@ From AzuraCast source (`backend/src/Radio/Backend/Liquidsoap.php:65-77`):
 
 - DJ port = `backend_config.dj_port`, else frontend port + 5. Station id 1 → default **8005**.
 
+From `azuracast.liq:666` and `FallbackFile.php`:
+
+- The chain ends in `fallback(id="safe_fallback", track_sensitive=false, [radio, error_file])`. `error_file` is a `single()` on `settings.azuracast.fallback_path`, so *something* always plays while the backend runs.
+- Default path `/usr/local/share/icecast/web/error.mp3` — the AzuraCast jingle.
+- `station.fallback_path` overrides it per station, set from **Station → Broadcasting → Custom Fallback File**. Changing it sets `needs_restart`.
+- `ConfigWriter.php` writes the `settings.azuracast.fallback_path :=` assignment *after* the `CUSTOM_TOP` injection point, so overriding the setting in the Liquidsoap config editor is clobbered. Use the upload page.
+
 From `ConfigWriter.php:547-663`:
 
 - The whole harbor block, live recording included, is gated on `enable_streamers`.
@@ -76,9 +83,10 @@ Now-playing schema carries two distinct signals (verified against `demo.azuracas
 | B1 | Liquidsoap DJ/streamer input, not direct Icecast source | Documented AzuraCast path; required by B6. Direct source would conflict with Liquidsoap, which is also a source on that mount. |
 | B2 | BUTT sends Ogg/Opus 96–128 kbps | The mount re-encodes to 192 kbps MP3. A different codec family minimises generation loss versus MP3→MP3. Bandwidth is irrelevant — every candidate is under 0.25 Mbps. |
 | B3 | 48 kHz | Opus operates internally at 48 kHz; 44.1 forces a resample for no benefit. The 2i2 is the A/D converter, so there is no upstream digital rate to match. |
-| B4 | No AutoDJ — station is offline when nobody broadcasts | Radio will not run continuously. Consequence: the API 404 becomes a valid off-air signal for the website. |
+| B4 | No AutoDJ — nothing is scheduled when nobody broadcasts | Radio will not run continuously. The mount does **not** go down, though: Liquidsoap stays up and plays the station fallback file, so off-air is signalled by `live.is_live`, not by a 404. See B7. |
 | B5 | Single uplink with manual failover between 5G and venue wifi | The feed is attended and non-continuous; dual-WAN hardware is not warranted. BUTT auto-reconnect turns a 5G blip into a gap rather than an ending. |
 | B6 | Server-side recording of live broadcasts | Enables listen-back after the festival. Requires B1. |
+| B7 | Custom Fallback File — ~30 s of silence, uploaded per station | Without it the built-in `error.mp3` ("The station you're listening to is powered by AzuraCast…") loops whenever no streamer is connected, which under B4 is most of the time. Silence is the intended sound of off-air. |
 
 Explicitly rejected: TLS on the DJ connection. The password crosses the network in the clear over plain Icecast, accepted for a festival-duration credential, rotated afterwards.
 
@@ -122,6 +130,15 @@ Out of scope: audio playback on merjemterud.no, iframe embed, HLS, now-playing m
 | 1.5 | Enable Record Live Broadcasts | MUST | A test broadcast yields a downloadable file |
 | 1.5.1 | Verify free disk on the Hetzner volume | SHOULD | Headroom for a weekend of recordings |
 | 1.6 | No AutoDJ playlist | WONT | Chosen, per B4 |
+| 1.7 | Upload a silent Custom Fallback File | MUST | Disconnecting BUTT yields silence on the mount, not the AzuraCast jingle |
+
+Generating the file for 1.7, tagged because the fallback's metadata reaches listeners' players:
+
+```bash
+ffmpeg -f lavfi -i anullsrc=r=48000:cl=stereo -t 30 \
+  -c:a libmp3lame -b:a 64k -metadata title="Radio Jemterud" -metadata artist=" " \
+  silence.mp3
+```
 
 If port 8005 remains blocked after 1.1 succeeds, the block is network rather than "nothing listening". If nginx interferes, connect BUTT to `62.238.104.244`.
 
