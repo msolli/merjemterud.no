@@ -35,9 +35,3 @@ Det jeg ønsker meg i bursdag er festival.
 Dette er et heidundrandes underskuddsprosjekt, og for ikke å gå fullstendig konkurs ønsker jeg meg mer bestemt at du kjøper festivalbillett. Vi opererer med tre prisklasser: en for deg som er blakk, en for hvermannsen og i tillegg en lyx-billett som blant annet inkluderer meet & greet og autograf på valgfri gjenstand/kroppsdel.
 
 Skulle det ved et mirakel bli et overskudd, blir dette donert til Gaza.
-
-:cta/label Meld deg på her
-
-:cta/url https://pages.oiiku.com/p/8dc66c19f4803a4d995c631194121878907748e2d41f868ad48d33f35a999758
-
-:radio/url https://merjemterud.torshov.club/public/merjemterud

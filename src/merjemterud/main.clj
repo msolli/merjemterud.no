@@ -109,8 +109,7 @@
         [:a {:href  href
              :class (str "topnav__link"
                          (when (= href uri) " topnav__link--active"))}
-         label])]
-     [:a.btn.btn--primary.topnav__cta {:href (:cta/url page)} "Billett →"]]))
+         label])]]))
 
 (defn site-footer
   []
@@ -122,8 +121,7 @@
 (defn cta-band
   [page]
   [:section.cta-band
-   [:p.cta-band__label "Det jeg ønsker meg i bursdag er festival"]
-   [:a.btn.btn--dark.btn--lg {:href (:cta/url page)} (:cta/label page)]])
+   [:p.cta-band__label "Det jeg ønsker meg i bursdag er festival"]])
 
 (defn layout
   [page & body]
@@ -156,11 +154,7 @@
     [:p.kicker (:hero/kicker page)]
     [:h1.hero__title (tape-words (:hero/title page))]
     [:p.hero__tagline (:hero/tagline page)]
-    [:p.hero__lead (:hero/lead page)]
-    [:div.hero__actions
-     [:a.btn.btn--primary.btn--lg {:href (:cta/url page)} (:cta/label page)]
-     (radio-button page)
-     (onair-pip true)]]
+    [:p.hero__lead (:hero/lead page)]]
    [:div.stamp
     [:span.stamp__big "50"]
     [:span.stamp__sub "år"]

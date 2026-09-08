@@ -2,15 +2,9 @@
 
 :page/title Program
 
-:cta/label Meld deg på her
-
-:cta/url https://pages.oiiku.com/p/8dc66c19f4803a4d995c631194121878907748e2d41f868ad48d33f35a999758
-
-:radio/url https://merjemterud.torshov.club/public/merjemterud
-
 :program/radio
 
-Radio Jemterud starter fredag 12.00. Preiking, musikk og oppdateringer for gjester på vei til festival. Sendinga åpnes i en egen fane, og pipa her viser om vi er på lufta akkurat nå.
+Radio Jemterud starter fredag 12.00. Preiking, musikk og oppdateringer for gjester på vei til festival.
 
 :program/forjemterud
 

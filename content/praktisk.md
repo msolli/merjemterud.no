@@ -2,10 +2,6 @@
 
 :page/title Praktisk
 
-:cta/label Meld deg på her
-
-:cta/url https://pages.oiiku.com/p/8dc66c19f4803a4d995c631194121878907748e2d41f868ad48d33f35a999758
-
 :sted/body
 
 Festivalen finner sted på et sted som heter [Alcatraz](https://www.alcatraz.se/), som ligger nøyaktig på grensa mellom Värmland og Västra Götalands län, i den lille bygda Gustavsfors. To timers biltur fra Oslo. [Se kart](https://www.google.com/maps/search/alcatraz,+Gustavsfors/@59.1945038,12.1039935,602m/data=!3m2!1e3!4b1?entry=ttu&g_ep=EgoyMDI2MDUyNi4wIKXMDSoASAFQAw%3D%3D).
